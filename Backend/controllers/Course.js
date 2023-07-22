@@ -119,7 +119,7 @@ exports.createCourse = async (req, res)=>
 
 // get the all coursere 
 
-exports.createCourse = async (req, res)=>
+exports.getAllCourse = async (req, res)=>
 {
 
     try {

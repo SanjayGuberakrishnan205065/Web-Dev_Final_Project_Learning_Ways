@@ -33,7 +33,7 @@ exports.auth = async (req, res, next) => {
         message: "Token is invalid ",
       });
     }
-
+    next();
 
   } catch (error) {
     return res.status(500).json({

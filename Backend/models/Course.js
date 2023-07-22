@@ -10,6 +10,9 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  whatYouWillLearn :{
+    type:String,
+  },
   price: {
     type: Number,
     required: true,

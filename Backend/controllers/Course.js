@@ -1,7 +1,7 @@
 
 const { UploadStream } = require("cloudinary");
 const Course = require("../models/Course");
-const Tags = require("../models/Tags")
+const Tags = require("../models/Category")
 const User = require("../models/User")
 const imageUploader = require("../utils/imageUploader")
 

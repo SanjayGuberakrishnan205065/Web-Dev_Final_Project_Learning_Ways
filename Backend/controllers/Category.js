@@ -1,7 +1,7 @@
-const Tags = require("../models/Tags");
+const Tags = require("../models/Category");
 
 
-exports.createTags = async (req, res) =>{
+exports.createCategory = async (req, res) =>{
     try {
         //fetch Data 
         const {name ,description} = req.body;
@@ -39,7 +39,7 @@ exports.createTags = async (req, res) =>{
     }
 }
 
-exports.getAllTags = async (req,res)=>{
+exports.getAllCategory = async (req,res)=>{
     try {
 
         //get data from tag module 

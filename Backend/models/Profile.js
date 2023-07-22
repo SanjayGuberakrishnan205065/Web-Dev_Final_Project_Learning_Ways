@@ -13,7 +13,7 @@ const profileSchema = new mongoose.Schema({
     required: true,
     
   },
-  About: {
+  about: {
     type: String,
     required: true,
     

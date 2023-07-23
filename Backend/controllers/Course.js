@@ -142,23 +142,27 @@ exports.getAllCourse = async (req, res)=>
      1. By using find() method get all course Details with send all parameter true and populate instructor
      2. Return positive response.
      3. Otherwise return negative response
-     
+
      */
 
 
     try {
 
-        // get data from the course 
+        // Get data from the course 
 
          const  coursedata = await Course.find({},{
             courseName:true,
+            courceContent:true,
             price:true,   
             thumbNail:true,
             instructor:true,
             ratingAndReview:true,
+            category:true,
             studentEnrolled:true
 
-         }).populate("instructor").exec();
+         }).populate("instructor").populate("courseContent")
+         .populate("ratingAndReview").populate("category").
+         populate("studentEnrolled").exec();
 
         res.status(200).json({
             success:true,

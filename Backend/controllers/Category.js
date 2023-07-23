@@ -3,6 +3,17 @@ const Tags = require("../models/Category");
 
 exports.createCategory = async (req, res) =>{
     try {
+        /*
+        To create the category required steps 
+
+        1. Fetch Data 
+        2. validate 
+        3. Create Entry in Database
+        4. Return positive response.
+        5. Otherwise return negative response
+        
+         */
+
         //fetch Data 
         const {name ,description} = req.body;
         //validate 
@@ -41,6 +52,13 @@ exports.createCategory = async (req, res) =>{
 
 exports.getAllCategory = async (req,res)=>{
     try {
+        /*To get all Category, The required steps are below,
+
+     1. By using find() method get all course Details with send all parameter true and populate instructor
+     2. Return positive response.
+     3. Otherwise return negative response
+     
+     */
 
         //get data from tag module 
 

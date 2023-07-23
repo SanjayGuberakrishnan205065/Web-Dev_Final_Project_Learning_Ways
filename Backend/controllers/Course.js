@@ -1,7 +1,7 @@
 
 const { UploadStream } = require("cloudinary");
 const Course = require("../models/Course");
-const Tags = require("../models/Category")
+const Category = require("../models/Category")
 const User = require("../models/User")
 const imageUploader = require("../utils/imageUploader")
 
@@ -10,6 +10,21 @@ const imageUploader = require("../utils/imageUploader")
 
 exports.createCourse = async (req, res)=>
 {
+    /*
+     To create the course the required steps are below,
+
+     1. Fetch the data from request body. 
+     2. Get image file from request files for thumbNail.
+     3. Validate Data.
+     4. Find the instructor using req.use.id and validate it.
+     5. Get category details and validate it.
+     6. Uoload the image of thumbNail on cloudinary and get url.
+     7. Create entry in Course Schema.
+     8. Add this course id in instructor's courses arrray
+     9. Similariy in Catagory  schema
+     10. Return positive response.
+     11. Otherwise return negative response
+     */
 
     try {
         //get data from body 
@@ -18,13 +33,14 @@ exports.createCourse = async (req, res)=>
             courseDescription, 
             whatYouWillLearn,
             price, 
-            tag } =req.body;
+            tag ,
+           category} =req.body;
         
         // get thumbnail
         const thumbNail = req.files.thumbNailImage;
 
        //validate the data 
-       if(!courseName || !courseDescription || !whatYouWillLearn || !price || !tag || !thumbNail) 
+       if(!courseName || !courseDescription || !whatYouWillLearn || !price || !tag || !thumbNail,category) 
        {
         return res.status(401).json({
             success: false,
@@ -42,7 +58,7 @@ exports.createCourse = async (req, res)=>
 
         //check instructor is present 
 
-        if(instructorDetails)
+        if(!instructorDetails)
         {
             return res.status(404).json({
                 success:false,
@@ -50,16 +66,16 @@ exports.createCourse = async (req, res)=>
             });
         }
 
-         //fetch the details of tag 
-         const tagDetails = await User.findById(tag);
+         //fetch the details of Catagory
+         const categoryDetails = await User.findById(category);
 
          //check tag is present 
  
-         if(tagDetails)
+         if(!categoryDetails)
          {
              return res.status(404).json({
                  success:false,
-                 message:"tag Not Found"
+                 message:"category Not Found"
              });
          }
 
@@ -86,8 +102,8 @@ exports.createCourse = async (req, res)=>
                 }
             },{new:true})
 
-        //update the tag Schema 
-        await Tags.findByIdAndUpdate({_id:tag},
+        //update the Category Schema 
+        await Category.findByIdAndUpdate({_id:category},
             {
                 $push:{
 
@@ -121,6 +137,14 @@ exports.createCourse = async (req, res)=>
 
 exports.getAllCourse = async (req, res)=>
 {
+    /*To create the course the required steps are below,
+
+     1. By using find() method get all course Details with send all parameter true and populate instructor
+     2. Return positive response.
+     3. Otherwise return negative response
+     
+     */
+
 
     try {
 

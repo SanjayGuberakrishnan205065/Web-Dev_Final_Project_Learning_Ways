@@ -137,7 +137,7 @@ exports.createCourse = async (req, res)=>
 
 exports.getAllCourse = async (req, res)=>
 {
-    /*To create the course the required steps are below,
+    /*To get the All courses the required steps are below,
 
      1. By using find() method get all course Details with send all parameter true and populate instructor
      2. Return positive response.
@@ -166,7 +166,7 @@ exports.getAllCourse = async (req, res)=>
 
         res.status(200).json({
             success:true,
-            message:"Course created successfully",
+            message:" All Course fetched successfully",
             data:coursedata,
         })
         
@@ -174,10 +174,82 @@ exports.getAllCourse = async (req, res)=>
         console.log(error)
         return res.status(401).json({
             success: false,
-            message: "Failed to create a course ",
+            message: "Failed to fetch all  a course ",
           });
         
         
     }
 
 }
+
+
+
+
+// Get Full single Course details 
+exports.getCourse= async (req,res)=>{
+/*To get the single course required steps are below,
+
+
+     1. Get course Id from body 
+     2. By using find() method get course Details with send all parameter true and populate 
+     3. Return positive response.
+     4. Otherwise return negative response
+
+     */
+
+
+     try {
+        // get course id 
+        const { courseId } = req.body;
+
+        // Get data from the course 
+
+         const  coursedata = await Course.find({_id:courseId},{
+            courseName:true,
+            courceContent:true,
+            price:true,   
+            thumbNail:true,
+
+         }).populate(
+            {
+                path:"instructor",
+                populate:{
+                    path:"additionalDetails"
+                },
+            }
+         )
+         .populate({
+            path:"courseContent",
+            populate:{
+                path:"subSection"
+            }
+         })
+         .populate("ratingAndReview").populate("category").exec();
+
+
+         // validation 
+         if(!coursedata){
+            return res.status(401).json({
+                success:false,
+                message:`could not found course details with ${courseId}`
+            })
+         }
+
+        res.status(200).json({
+            success:true,
+            message:"Course fetched successfully",
+            data:coursedata,
+        })
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(401).json({
+            success: false,
+            message: "Failed to fetch a course ",
+          });
+        
+        
+    }
+
+}
+

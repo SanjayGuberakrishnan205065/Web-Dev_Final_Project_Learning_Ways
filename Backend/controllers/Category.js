@@ -1,4 +1,6 @@
-const Tags = require("../models/Category");
+const Category = require("../models/Category");
+const Course =require("../models/Course");
+
 
 
 exports.createCategory = async (req, res) =>{
@@ -27,15 +29,15 @@ exports.createCategory = async (req, res) =>{
         }
 
         //Create Entry in DB
-        const tag = await Tags.create({
+        const category = await Category.create({
             name:name,
             description:description,
         });
-        console.log(tag);
+        console.log(category);
 
         res.status(200).json({
             success:true,
-            message:"Tag Entry Created Successfully",
+            message:"category Entry Created Successfully",
         })
 
         
@@ -43,7 +45,7 @@ exports.createCategory = async (req, res) =>{
         console.log(error)
         return res.status(401).json({
             success: false,
-            message: "Tag entry not created , please try again",
+            message: "category entry not created , please try again",
           });
         
         
@@ -60,15 +62,15 @@ exports.getAllCategory = async (req,res)=>{
      
      */
 
-        //get data from tag module 
+        //get data from category module 
 
-        const tags = await Tags.find({},{name:true, description:true}) 
+        const  cataegory= await Category.find({},{name:true, description:true}) 
         // data must have this name and the description parameter 
 
         res.status(200).json({
             success:true,
             message:"Data Get successfully ",
-            tags,
+            cataegory,
         })
 
 
@@ -78,9 +80,87 @@ exports.getAllCategory = async (req,res)=>{
         console.log(error)
         return res.status(401).json({
             success: false,
-            message: "Fail to fetch the data of tags",
+            message: "Fail to fetch the data of cataegory",
           });
         
+        
+    }
+}
+
+//category Page details 
+
+exports.categoryPagedetails = async (req,res)=>{
+    try {
+        /*
+        Required steps to Get the category page details 
+
+        1. Get categoryId 
+        2. Get courses for perticular category 
+        3. validation
+        4. Get course for different category 
+        5. Get top selling courses 
+        6. return responce.
+
+         */
+
+        // 1. Get categoryId 
+        const {categoryId}= req.body;
+
+        // 2. Get courses for perticular category 
+        const selectedCategory = await Category.findById(categoryId)
+                                                       .populate("course").exec();
+        // 3. validation
+        if(!selectedCategory)
+        {
+            return res.status(404).json({
+                success:false,
+                message:"Category data not found "
+            })
+        }
+
+        // 4. Get course for different category 
+        const differentCategories = await Category.findById({_id:{$ne:categoryId}})  // not equal to category id
+                                                                .populate("course").exec();
+
+        if(!differentCategories)
+        {
+            return res.status(404).json({
+                success:false,
+                message:"Different Category data not found "
+            })
+        }
+        // 5. Get top selling courses 
+        const topSelling = Course.aggregate([
+            // Unwind the studentEnrolled array to create separate documents for each student ID
+            { $unwind: "$studentEnrolled" },
+            // Group the documents by courseId and count the number of occurrences for each courseId
+            { $group: { _id: "$_id", studentEnrolled: { $sum: 1 } } },
+            // Sort the courses in descending order based on the studentEnrolled
+            { $sort: { studentEnrolled: -1 } },
+            // Limit the output to the top 10 courses
+            { $limit: 10 }
+          ])
+
+        // 6. return responce.
+        
+        return res.status(200).json({
+            success:true,
+            data:{
+                selectedCategory,
+                differentCategories,
+                topSelling,
+            },
+            message:"All category data send successfully "
+        })
+        
+
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:"Failed to fetch category data."
+        })
         
     }
 }

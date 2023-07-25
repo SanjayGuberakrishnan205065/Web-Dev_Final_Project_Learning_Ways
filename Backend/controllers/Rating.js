@@ -3,7 +3,7 @@ const Course = require("../models/Course");
 const { default: mongoose } = require("mongoose");
 const Reating = require("../models/Reating");
 
-exports.crerateRating =async (req,res)=>{
+exports.createRating =async (req,res)=>{
     try {
 
         /* 

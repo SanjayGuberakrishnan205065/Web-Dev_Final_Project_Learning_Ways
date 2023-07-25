@@ -2,7 +2,7 @@
 
 
 
-exports.aboutUs = async (req, res) =>
+exports.contactUs = async (req, res) =>
 {
     try {
 

@@ -89,7 +89,7 @@ exports.getAllCategory = async (req,res)=>{
 
 //category Page details 
 
-exports.categoryPagedetails = async (req,res)=>{
+exports.categoryPageDetails = async (req,res)=>{
     try {
         /*
         Required steps to Get the category page details 

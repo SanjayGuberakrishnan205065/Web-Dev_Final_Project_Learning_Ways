@@ -80,7 +80,7 @@ exports.createSubSection = async (req, res) => {
 
 
 // update the Subsection 
-exports.UpdateSubSection = async (req, res) => {
+exports.updateSubSection = async (req, res) => {
   try {
     /*  Rquired steps to update Subsection
 

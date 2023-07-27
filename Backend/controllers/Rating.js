@@ -161,8 +161,10 @@ exports.courseRating = async (req,res)=>{
         Required steps to caculate the average of rating 
         1. Get course id from body
         2. Validate data.
-        3. Calcute average by using the aggregate function
-        4. Return average in responce
+        3. Find the all reating of given course 
+        4. Sort this with Decresing order and popolate user wiih perticular fields 
+        5. If reating is present then return reatings 
+        6. Return response.
         */
 
 
@@ -177,9 +179,7 @@ exports.courseRating = async (req,res)=>{
             })
 
         }
-        // 3. Calcute average by using the aggregate function
-        // by using aggregate function we calculate the average reating for perticular course 
-        // aggregate function return output in the form of array 
+
         const result = await Reating.find({course:new mongoose.Types.ObjectId(courseId)})
                                                                                 .sort({reating:"desc"})
                                                                                 .populate({
@@ -196,7 +196,6 @@ exports.courseRating = async (req,res)=>{
             })
         }
 
-        // 4. Return average in responce
         return res.status(200).json({
             success:true,
             message:"No reating yet for this course",

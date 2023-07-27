@@ -153,6 +153,16 @@ exports.verifySignature = async (req, res) => {
 
     try {
       // full fill actions
+
+      // Check for student is alrady present in this course 
+      const enrolleded = await Course.find({studentEnrolled:userId})
+      if(enrolleded){
+        return res.status(401).json({
+          success: false,
+          message: "Student Already enrolled in thids course ",})
+
+      }
+
       // 1. Create entry in course schema of studenEnrolled
       const enrolledCourse = await Course.findByIdAndUpdate(
         { _id: courseId },

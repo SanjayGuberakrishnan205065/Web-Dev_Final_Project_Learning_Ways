@@ -156,7 +156,7 @@ exports.getAllUser = async (req,res)=>{
 };
 
 
-// the student get enrolled course 
+// the get ALL enrolled course 
 exports.getEnrolledCourses = async (req, res) => {
   try {
     const userId = req.user.id

@@ -149,7 +149,7 @@ router.get("/course/getAverageRating", averageRating)
 // Get all reviews 
 router.get("/course/getReviews", getAllReating)
 
-//Get reatinh for perticular course 
+//Get reating for perticular course 
 router.get("/course/getCourseRating",courseRating)
 
 

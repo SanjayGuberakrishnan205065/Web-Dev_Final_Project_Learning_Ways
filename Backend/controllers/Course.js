@@ -255,6 +255,14 @@ exports.getAllCourse = async (req, res)=>
  
 //get single course details 
 exports.getCourseDetails = async (req, res) => {
+/*    Required steps to get course 
+   1. Fetch id from body 
+   2. Validate id
+   3. By using findByIde() function find course 
+   4. Apply the populate function on all filds that are stored with Object id  
+   5. validate the course details 
+   6. return response 
+*/
     try {
             //get id
             const {courseId} = req.body;
@@ -310,73 +318,17 @@ exports.getCourseDetails = async (req, res) => {
 
 //delete course 
 exports.deleteCourse = async (req, res) => {
-    // try {
-    //  /*  Rquired steps to delete section
-  
-    //         1. Fetch data from req.params. 
-    //         2. Validate the fetched data.
-    //         3. Delete course 
-    //         4. Delete sections under thid course and delete subsection under all this subsection
-    //         4. Send positive response.
-    //         5. Otherwise send negative response.
-    //   */
-  
-    //   //Fetch data from req.params.
-    //      // here we consider the sectionId get by the request parameter 
-    //   const { courseId } = req.body;
-  
-    //   //Validate the fetched data.
-    //   if (!courseId) {
-    //     return res.status(401).json({
-    //       success: false,
-    //       message: " Please fill all fields",
-    //     });
-    //   }
-  
-      
-    //   const course = await Section.findById(courseId);
-    //   if(!course)
-    //   {
-    //     return res.status(401).json({
-    //       success: false,
-    //       message: "course not found ",
-    //     });
-    //   }
-      
-      
-    //   //Delete course 
-      
-      
-    //   const deletedSection = await Section.findByIdAndDelete(sectionId)
-  
-  
-    //   // update course
-    //   const updatedCourse = await Course.findByIdAndUpdate(courseId,{
-    //     $pull: { courseContent: sectionId} },
-    //     { new: true } ).exec();
-  
-  
-    //     //deleted all section under this course
-    //     if(course.subSection)
-    //     {
-  
-    //       await SubSection.deleteMany({ _id: { $in: section.subSection} });
-    //     }
-  
-    //   // Send Positive response
-    //   return res.status(200).json({
-    //     success: true,
-    //     message: "Section deleted successfully",
-    //     deletedSection,
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: "Failed to delete section",
-    //     // updatedCourse:updatedCourse,
-    //   });
-    // }
+    
+    /*    Required steps to Delete course 
+   1. Fetch id from body 
+   2. Validate id
+   3. By using findByIde() function find course 
+   4. By using for of loop on finded courseContent(section) 
+   5. If coureContent present then by using Deletemeny() function 
+   6. Delete all subsection present in current section  then delete section 
+   7. Finaly delete the course 
+   8. Return response 
+*/
 
         try {
             const {courseId}  =req.body;

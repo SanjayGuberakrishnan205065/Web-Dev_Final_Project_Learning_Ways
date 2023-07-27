@@ -84,7 +84,7 @@ exports.isInstructor =(req,res,next)=>
         //here req.user.role added in auth middle ware 
 
         //check role match with student 
-        if(userType!=="instructor"){
+        if(userType!=="Instructor"){
             return res.status(401).json({
                 success: false,
                 message: "This is a protected Route for Instructor other than instructor not allowed ",

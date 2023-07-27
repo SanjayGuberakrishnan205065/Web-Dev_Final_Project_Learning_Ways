@@ -1,20 +1,26 @@
 
 // import 
 const express = require("express");
-
 const router = express.Router();
 
 // import all handler 
-const {sendOtp,signUp,login} =require("../controllers/Auth");
+const {sendOTP,signUp,login} =require("../controllers/Auth");
 const {createCategory, getAllCategory,categoryPageDetails}=require("../controllers/Category");
 const {contactUs}=require("../controllers/ContactUs");
-const {createCourse,getAllCourse,getCourse}=require("../controllers/Course");
+const {createCourse,getAllCourse,getCourseDetails, UpdateCourse, deleteCourse}=require("../controllers/Course");
 const {capturePayment,verifySignature}=require("../controllers/Payments");
 const {updateProfile,deleteAccount,getAllUser, getEnrolledCourses, updateDisplayPicture}=require("../controllers/Profile");
 const {createRating,averageRating,courseRating,getAllReating}=require("../controllers/Rating");
 const {resetPasswordToken,resetPassword}=require("../controllers/ResetPassword");
 const {createSection,UpdateSection,deleteSection}=require("../controllers/Section");
 const {createSubSection,updateSubSection,deleteSubSection}=require("../controllers/SubSection");
+const {testing} =require("../utils/testing");
+
+
+//testing
+router.post("/testing",testing);
+
+
 
 // import middleware 
 const {auth, isStudent, isInstructor, isAdmin} = require("../middlewares/auth");
@@ -32,13 +38,13 @@ const {auth, isStudent, isInstructor, isAdmin} = require("../middlewares/auth");
 //********************************************************************************************************************
 
 //User login 
-router.post("/login",login);
+router.post("/auth/login",login);
 
 //User signUp
-router.post("/signup",signUp)
+router.post("/auth/signup",signUp)
 
 //Sendning otp to user mail
-router.post.apply("sendotp",sendOtp);
+router.post("/auth/sendotp",sendOTP);
 
 //Change Password 
 
@@ -47,10 +53,10 @@ router.post.apply("sendotp",sendOtp);
 //********************************************************************************************************************
 
 //Geneteate password token 
-router.post("reset-password-token",resetPasswordToken);
+router.post("/auth/reset-password-token",resetPasswordToken);
 
 //Reset password 
-router.post("reset-password",resetPassword);
+router.post("/auth/reset-password",resetPassword);
 
 
 //********************************************************************************************************************
@@ -66,34 +72,49 @@ router.post("reset-password",resetPassword);
 //********************************************************************************************************************
 
 //This route only for instructor 
+
 //Create course 
-router.post("/createCourse", auth, isInstructor, createCourse);
+router.post("/course/createCourse", auth, isInstructor, createCourse);
 
-//Add section 
-router.post("/addSection", auth, isInstructor,createSection);
-
-//Update section 
-router.post("/updateSection", auth, isInstructor, UpdateSection);
-
-//Delete section
-router.post("/deleteSection", auth, isInstructor,deleteSection);
-
-//Edit subsection 
-router.post("/updateSubSection", auth, isInstructor,updateSubSection);
-
-//Delete SubSection
-router.post("/deleteSubSection", auth, isInstructor,deleteSubSection);
-
-//Add subsectin in to section 
-router.post("/addSubSection", auth, isInstructor,createSubSection);
-
+//update course 
+router.post("/course/updateCourse", auth, isInstructor, UpdateCourse);
 
 // Geting course details 
 // Get all course 
-router.get("/getAllCourses",getAllCourse);
+router.get("/course/getAllCourses",getAllCourse);
 
 // Get detail of perticularr course 
-router.get("/getCourseDetails",getCourse);
+router.get("/course/getCourseDetails",getCourseDetails);
+
+
+// delete course 
+router.delete("/course/deleteCourse",deleteCourse);
+
+
+//********************************************************************************************************************
+//                                              Section And Subsection 
+//********************************************************************************************************************
+
+//Add section 
+router.post("/course/addSection", auth, isInstructor,createSection);
+
+//Update section 
+router.post("/course/updateSection", auth, isInstructor, UpdateSection);
+
+//Delete section
+router.post("/course/deleteSection", auth, isInstructor,deleteSection);
+
+
+//Add subsectin in to section 
+router.post("/course/addSubSection", auth, isInstructor,createSubSection);
+
+//Edit subsection 
+router.post("/course/updateSubSection", auth, isInstructor,updateSubSection);
+
+//Delete SubSection
+router.post("/course/deleteSubSection", auth, isInstructor,deleteSubSection);
+
+
 
 
 
@@ -104,13 +125,13 @@ router.get("/getCourseDetails",getCourse);
 
 // category can only be created by Admin
 //Create category 
-router.post("/createCategory",createCategory);
+router.post("/course/createCategory",auth,isAdmin,createCategory);
 
 //ShowAll category 
-router.get("/showAllCourses", getAllCategory);
+router.get("/course/showALLCategories", getAllCategory);
 
 //Get categorypage details 
-router.get("/getCategoryPageDetails",categoryPageDetails)
+router.get("/course/getCategoryPageDetails",categoryPageDetails)
 
 
 
@@ -120,16 +141,16 @@ router.get("/getCategoryPageDetails",categoryPageDetails)
 //********************************************************************************************************************
 
 //Create raeting 
-router.post("/createRating", auth, isStudent, createRating)
+router.post("/course/createRating", auth, isStudent, createRating)
 
 //Get average rating 
-router.get("/getAverageRating", averageRating)
+router.get("/course/getAverageRating", averageRating)
 
 // Get all reviews 
-router.get("/getReviews", getAllReating)
+router.get("/course/getReviews", getAllReating)
 
 //Get reatinh for perticular course 
-router.get("getCourseRation",courseRating)
+router.get("/course/getCourseRating",courseRating)
 
 
 
@@ -138,32 +159,32 @@ router.get("getCourseRation",courseRating)
 //********************************************************************************************************************
 
 //Update profile
-router.put("/updateProfile", auth,updateProfile)
+router.put("/profile/updateProfile", auth,updateProfile)
 
 //Get User datils 
-router.get("/getUserDetails",getAllUser);
+router.get("/profile/getUserDetails", auth,getAllUser);
 
 // Delete acount 
-router.delete("/deleteProfile",deleteAccount)
+router.delete("/profile/deleteProfile",auth,deleteAccount)
 
 // Get enrolled courses 
-router.get("/getEnrolledCpourse",getEnrolledCourses);
+router.get("/profile/getEnrolledCpourse", auth,getEnrolledCourses);
 
 //Updated display picture 
-router.put("/updatedDisplyPicture",updateDisplayPicture)
+router.put("/profile/updatedDisplyPicture", auth,updateDisplayPicture)
 
 //Contact Us 
-router.post("/contactUs",contactUs)
+router.post("/profile/contactUs", auth,contactUs)
 
 //********************************************************************************************************************
 //                                               Payment Route
 //********************************************************************************************************************
 
 //Capture Payment 
-router.post("/capturePayment", auth, isStudent, capturePayment)
+router.post("/payment/capturePayment", auth, isStudent, capturePayment)
 
 //Verify signiture 
-router.post("/verifySignature", verifySignature)
+router.post("/payment/verifySignature", verifySignature)
 
 
 

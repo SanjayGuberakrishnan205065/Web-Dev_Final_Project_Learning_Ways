@@ -1,5 +1,7 @@
 // import
 const mongoose = require("mongoose");
+const Course = require("./Course")
+const SubSection = require("./SubSection")
 
 const sectionSchema = new mongoose.Schema({
   sectionName: {
@@ -15,5 +17,9 @@ const sectionSchema = new mongoose.Schema({
     },
   ],
 });
+
+
+   
+  
 
 module.exports = mongoose.model("Section", sectionSchema);

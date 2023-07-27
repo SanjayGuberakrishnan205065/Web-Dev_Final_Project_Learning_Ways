@@ -1,6 +1,9 @@
 
+const { mongoose } = require("mongoose");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
+const {imageUploader} = require("../utils/imageUploader");
+
 
 
 exports.updateProfile = async (req, res)=>{
@@ -22,6 +25,7 @@ exports.updateProfile = async (req, res)=>{
         
     const {gender, DOB="", about="", contact} = req.body;
     const userId =req.user.id; 
+    console.log(userId);
 
     //Validate the fetched data.
     if (!gender|| !contact || !userId) {
@@ -51,7 +55,7 @@ exports.updateProfile = async (req, res)=>{
     res.status(200).json({
       success: true,
       message: "Profile updated successfully",
-      updatedSection,
+     profileDetails,
     });
   } catch (error) {
     console.log(error);
@@ -80,7 +84,8 @@ exports.deleteAccount = async (req, res)=>{
 
     //Fetch data from req.usr .
       
-       const { userId } = req.user.id;
+       const userId = req.user.id;
+       console.log(userId);
 
     //    2. Validate the fetched data.
       const userDetails = await User.findById(userId);
@@ -94,16 +99,16 @@ exports.deleteAccount = async (req, res)=>{
 
     //    3. First of all delete the profile 
         await Profile.findByIdAndDelete({_id:userDetails.additionalDetails});
-    /////// HW    4. Then delete count from total studend enrolled.
+    /////// HW    4. Then delete count from total student enrolled.
 
     //    5. Finaly delete the User acount 
-         await User.findByIdAndDelete({_id:userId});
+      const daletedAccount=  await User.findByIdAndDelete({_id:userId});
    
        // Send Positive response
        return res.status(200).json({
          success: true,
          message: "Acount deleted successfully",
-         deletedSection,
+        deleteAccount:this.deleteAccount
        });
      } catch (error) {
        console.log(error);
@@ -130,14 +135,15 @@ exports.getAllUser = async (req,res)=>{
         */
 
         // 1. Get id
-           const userId = req.user.id;
+           const id = req.user.id;
         // 2. Fetch databy id 
-        const userDetails = await User.findById(userId).populate("additionalDetails").exec();
+        const userDetails = await User.findById(id).populate("additionalDetails").exec();
         
   // Send Positive response
   return res.status(200).json({
     success: true,
     message: "User data fetched successfully",
+    data:userDetails
   
   });
 } catch (error) {
@@ -183,16 +189,18 @@ exports.getEnrolledCourses = async (req, res) => {
 exports.updateDisplayPicture = async (req, res) => {
   try {
     const displayPicture = req.files.displayPicture
-    const userId = req.user.id
-    const image = await uploadImageToCloudinary(
+    const userId =req.user.id; 
+    // const userId= 4555
+    console.log(userId)
+    const image = await imageUploader(
       displayPicture,
-      process.env.FOLDER_NAME,
+      `${process.env.FOLDER_NAME}/Profile`,
       1000,
       1000
     )
     console.log(image)
     const updatedProfile = await User.findByIdAndUpdate(
-      { _id: userId },
+      { _id: new mongoose.Types.ObjectId(userId) },
       { image: image.secure_url },
       { new: true }
     )
@@ -202,6 +210,7 @@ exports.updateDisplayPicture = async (req, res) => {
       data: updatedProfile,
     })
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
       success: false,
       message: error.message,

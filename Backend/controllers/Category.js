@@ -87,6 +87,8 @@ exports.getAllCategory = async (req,res)=>{
     }
 }
 
+
+
 //category Page details 
 
 exports.categoryPageDetails = async (req,res)=>{

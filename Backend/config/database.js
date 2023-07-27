@@ -6,7 +6,7 @@ require("dotenv").config();
 
 // create connection to data base & export it
 exports.connection = ()=>{
-    mongoose.connect(process.env.DATABASE_UERL,{
+    mongoose.connect(process.env.MONGODB_URL,{
         useNewUrlParser:true,
         useUnifiedTopology:true,
     })

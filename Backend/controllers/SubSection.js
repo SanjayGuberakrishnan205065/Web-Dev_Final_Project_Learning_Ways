@@ -1,7 +1,8 @@
 
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection")
-const imageUploader = require("../utils/imageUploader");
+const {imageUploader} = require("../utils/imageUploader");
+require("dotenv").config();
 
 
 //create SubSection
@@ -19,11 +20,11 @@ exports.createSubSection = async (req, res) => {
     */
 
     //Fetch data from body.
-    const { title , duration, description, SectionId } = req.body;
+    const { title , duration, description, sectionId } = req.body;
     const videoFile = req.files.videoFile;
 
     //Validate the fetched data.
-    if (!title || !duration|| !description|| !SectionId || !videoFile) {
+    if (!title || !duration|| !description|| !sectionId || !videoFile) {
      return res.status(401).json({
         success: false,
         message: "Please Fill all Fields",
@@ -31,7 +32,7 @@ exports.createSubSection = async (req, res) => {
     }
 
     // upload the file on cloudinary and get link for videoUrl
-    const video = await imageUploader(videoFile,"Video");
+    const video = await imageUploader(videoFile,`${process.env.FOLDER_NAME}/Videos`);
     if(!video)
     {
        return res.status(404).json({
@@ -51,7 +52,7 @@ exports.createSubSection = async (req, res) => {
     // Add this sectoin id in Section sehema.
 
     const updatedSection = await Section.findByIdAndUpdate(
-      { _id: SectionId },
+      { _id: sectionId },
       {
         $push: {
          subSection:subsectionData._id,
@@ -94,19 +95,37 @@ exports.updateSubSection = async (req, res) => {
     //Fetch data from body.
 
         
-    const {SubsectionName,SubsectionId} = req.body;
-
+    const {title,duration,description,subSectionId} = req.body;
+    const videoFile = req.files.videoFile;
     //Validate the fetched data.
-    if (!SubsectionName || !SubsectionId) {
-      res.status(401).json({
+    if (!title || !duration || !description||!videoFile||!subSectionId) {
+    return  res.status(401).json({
         success: false,
         message: "Invalid Subsection, Please try again",
       });
     }
-
+    
+    
     //Update Subsection.
-    const UpdatedSubSection = await SubSection.findByIdAndUpdate({_id:SubsectionId},{
-        SubsectionName:SubsectionName,
+
+    //upload video
+    const video = await imageUploader(videoFile,`${process.env.FOLDER_NAME}/Videos`);
+
+    if(!video)
+    {  
+       return res.status(401).json({
+            success:false,
+            message:"Video url not found"
+        })
+    }
+
+
+
+    const UpdatedSubSection = await SubSection.findByIdAndUpdate({_id:subSectionId},{
+        title:title,
+        duration:duration,
+        description:description,
+        video:video.secure_url,
     },{new:true})
 
     // Send Positive response
@@ -142,23 +161,41 @@ exports.deleteSubSection = async (req, res) => {
 
     //Fetch data from req.params.
        // here we consider the SubsectionId get by the request parameter 
-    const { SubsectionId } = req.params;
+    const { subSectionId ,sectionId} = req.body;
 
     //Validate the fetched data.
-    if (!SubsectionId) {
-      res.status(401).json({
+    if (!subSectionId ||!sectionId) {
+      return res.status(401).json({
         success: false,
         message: " Please fill all fields",
       });
     }
 
     //Delete Subsection.
-    const deletedSubSection = await SubSection.findByIdAndDelete({SubsectionId})
+    const subsection = await SubSection.findById(subSectionId)
+    // const deletedSubSection = await SubSection.findByIdAndDelete({SubsectionId})
+    if(!subsection){
+      return res.status(401).json({
+        success: false,
+        message: "Subsection is not present",
+      });
+    }
+
+
+    // delete subsection 
+    subsection.deleteOne();
+
+    // delete this Subsection from section 
+     const updatedSection = await Section.findByIdAndUpdate(sectionId,
+                                                       {$pull:{subSection:subSectionId}},{new:true}).exec();
+
+
     // Send Positive response
     res.status(200).json({
       success: true,
       message: "SubSection deleted successfully",
-      deletedSubSection,
+      deletedSubSection : subsection,
+      updatedSection :updatedSection,
     });
   } catch (error) {
     console.log(error);

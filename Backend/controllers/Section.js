@@ -1,5 +1,7 @@
 const Section = require("../models/Section");
 const Course = require("../models/Course");
+const mongoose = require("mongoose");
+const SubSection =require("../models/SubSection")
 
 //create Section
 exports.createSection = async (req, res) => {
@@ -26,18 +28,26 @@ exports.createSection = async (req, res) => {
     }
 
     //Create new section.
-    const sectionData = await Section.create({ sectionName });
+    const sectionData = await Section.create({sectionName});
 
     // Add this sectoin id in Course sehema.
 
     const updatedCourse = await Course.findByIdAndUpdate(
-      { _id: courseId },
+      courseId,
       {
         $push: {
-          courceContent: sectionData._id,
+          courseContent:sectionData._id,
         },
       },{new:true}
-    );
+    ).populate({
+      path:"courseContent",
+      populate:{
+        path:"subSection",
+      },
+
+    }).exec();
+
+
 
     /////TODO  how yo get secction as well as subsection data when print updatedcourse
     ///// use populate
@@ -48,6 +58,7 @@ exports.createSection = async (req, res) => {
       success: true,
       message: "Section created successfully",
       sectionData,
+      updatedCourse:updatedCourse
     });
   } catch (error) {
     console.log(error);
@@ -107,9 +118,6 @@ exports.UpdateSection = async (req, res) => {
 };
 
 
-
-
-
 // Delete the section 
 exports.deleteSection = async (req, res) => {
   try {
@@ -124,7 +132,7 @@ exports.deleteSection = async (req, res) => {
 
     //Fetch data from req.params.
        // here we consider the sectionId get by the request parameter 
-    const { sectionId } = req.params;
+    const { sectionId ,courseId } = req.body;
 
     //Validate the fetched data.
     if (!sectionId) {
@@ -134,12 +142,37 @@ exports.deleteSection = async (req, res) => {
       });
     }
 
+    
+    const section = await Section.findById(sectionId);
+    if(!section)
+    {
+      return res.status(401).json({
+        success: false,
+        message: "Section not found ",
+      });
+    }
+    
+    
     //Delete section.
-    const deletedSection = await Section.findByIdAndDelete({sectionId})
-
     ///// TODO: do you need to delete this section id from course schema
+    /// answer is yes 
+    // virtualy it show as deleted but in data base entry is not deleted from ciurse data 
+    
+    const deletedSection = await Section.findByIdAndDelete(sectionId)
 
 
+    // update course
+    const updatedCourse = await Course.findByIdAndUpdate(courseId,{
+      $pull: { courseContent: sectionId} },
+      { new: true } ).exec();
+
+
+      //deleted all section under this section
+      if(section.subSection)
+      {
+
+        await SubSection.deleteMany({ _id: { $in: section.subSection} });
+      }
 
     // Send Positive response
     return res.status(200).json({
@@ -152,6 +185,7 @@ exports.deleteSection = async (req, res) => {
     return res.status(401).json({
       success: false,
       message: "Failed to delete section",
+      // updatedCourse:updatedCourse,
     });
   }
 };

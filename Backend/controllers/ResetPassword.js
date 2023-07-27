@@ -4,10 +4,11 @@ const bcrypt = require("bcrypt")
 const { mailSender } = require("../utils/mailSender");
 require("dotenv").config();
 
-exports.resetPasswordToken = async (res, req) => {
+exports.resetPasswordToken = async (req, res) => {
   try {
     //get email from body
-    const { email } = req.body;
+    const email  = req.body.email;
+   
 
     //check mail
     if (!email) {
@@ -17,7 +18,7 @@ exports.resetPasswordToken = async (res, req) => {
           });
     }
     //check user for this mail
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email});
 
     if (!user) {
         return res.status(401).json({
@@ -35,7 +36,7 @@ exports.resetPasswordToken = async (res, req) => {
       { email: email },
       {
         token: token,
-        resetPasswordExpires: Date.now() + 2 * 60 * 1000,
+        resetPasswordExpires: Date.now() + 5 * 60 * 1000,
       },
       { new: true } // for geting updated information
     );
@@ -57,6 +58,8 @@ exports.resetPasswordToken = async (res, req) => {
     });
   } catch (error) {
 
+    console.log(error);
+
     return res.status(500).json({
         success: false,
         message: "Failed to reset Password, Try again",
@@ -73,14 +76,14 @@ exports.resetPassword = async (req,res) =>{
         // fetch data
     const {password, cnfPassword , token} = req.body; // here token send by front end 
     // validate 
-    if(password!=cnfPassword)
-    {
+    if(password!==cnfPassword)
+    { 
         return res.status(401).json({
             success: false,
             message: "Password and ConfirmPassword not match ",
           });
 
-    }
+    } 
 
     //get user entry fron database 
     const user = await User.findOne({token:token});

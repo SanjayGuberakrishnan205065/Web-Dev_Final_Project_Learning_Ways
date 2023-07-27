@@ -4,7 +4,7 @@ const Course = require("../models/Course");
 const { instance } = require("../config/razorpay");
 const mailSender = require("../utils/mailSender");
 const { courseEnrollmentEmail } = require("../config/database");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
 //Cpture payment
 exports.capturePayment = async (req, res) => {

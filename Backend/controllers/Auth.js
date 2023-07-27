@@ -69,6 +69,7 @@ exports.sendOTP = async (req,res)=>{
     } catch (error) {
 
         console.log("Error occured whule Sending otp :",error);
+        console.error;
         res.status(500).json({
             success:false,
             message:error.message
@@ -78,7 +79,6 @@ exports.sendOTP = async (req,res)=>{
     }
 
 }
-
 
 
 
@@ -93,7 +93,7 @@ exports.signUp= async (req,res)=>
         email,
         password,
         cnfPassword, 
-        acountType,
+        accountType,
         phone,
         otp 
          } =req.body;
@@ -139,7 +139,7 @@ exports.signUp= async (req,res)=>
 
 
         //validate otp
-        if(resentOTP.length()==0)
+        if(resentOTP.length==0)
         {
             //otp not found 
             return res.status(400).json({
@@ -173,8 +173,8 @@ exports.signUp= async (req,res)=>
             firstName,
             lastName,
             email,
-            password:hashedPass,
-            acountType,
+            password:(await hashedPass).toString(),
+            accountType,
             image:`https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
             additionalDetails:profile._id,    
         })
@@ -235,12 +235,12 @@ exports.login = async (req,res)=>{
             const payload ={
                 email:user.email,
                 id:user._id,
-                role:user.acountType,
+                role:user.accountType,
             }
 
             const token = jwt.sign(payload,process.env.JWT_SECRET,{
 
-                expiresIn:"2h"
+                expiresIn:"24h"
             });
 
 

@@ -1,7 +1,7 @@
 // import
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const reatingSchema = new mongoose.Schema({
   rating: {
     type: Number,
     required: true,
@@ -28,4 +28,4 @@ const userSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("User",userSchema);
+module.exports = mongoose.model("Reating",reatingSchema);

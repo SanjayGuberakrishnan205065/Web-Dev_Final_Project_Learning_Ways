@@ -25,7 +25,7 @@ createdAt: {
 async function sendMailToVarification(email,otp)
 {
     try {
-        const mailResponce = await mailSender(email, "Varification Email From Learning Ways",otp);
+        const mailResponce = await mailSender(email, "Varification Email From Learning Ways",`The one time password is :${otp}`);
         console.log("Email sent Successfully",mailResponce)
         
     } catch (error) {

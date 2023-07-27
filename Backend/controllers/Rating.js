@@ -28,7 +28,7 @@ exports.createRating =async (req,res)=>{
         const userId = req.user.id;
 
         //   3. Validate the data 
-        if(!rating || !userI, !courseId)
+        if(!rating || !userId, !courseId)
         {
             return res.status(401).json({
                 success:false,

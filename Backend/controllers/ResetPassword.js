@@ -42,7 +42,7 @@ exports.resetPasswordToken = async (req, res) => {
     );
     //create url
     // this is front end url
-    const url = `https://localhost:3000/update-password/${token}`;
+    const url = `http://localhost:3000/update-password/${token}`;
 
     // send mail with link
     await mailSender(
@@ -74,9 +74,9 @@ exports.resetPasswordToken = async (req, res) => {
 exports.resetPassword = async (req,res) =>{
     try {
         // fetch data
-    const {password, cnfPassword , token} = req.body; // here token send by front end 
+    const {password, confirmPassword , token} = req.body; // here token send by front end 
     // validate 
-    if(password!==cnfPassword)
+    if(password!==confirmPassword)
     { 
         return res.status(401).json({
             success: false,

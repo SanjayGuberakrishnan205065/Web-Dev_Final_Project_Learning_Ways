@@ -92,15 +92,15 @@ exports.signUp= async (req,res)=>
         lastName,
         email,
         password,
-        cnfPassword, 
+        confirmPassword, 
         accountType,
-        phone,
+        // phone,
         otp 
          } =req.body;
 
 
         //validatation 
-        if(!firstName|| !lastName || !email || !password || !cnfPassword || !otp){
+        if(!firstName|| !lastName || !email || !password || !confirmPassword || !otp){
             return res.status(401).json({
                 success:false,
                 message:"Fill all Fields Properly"
@@ -120,7 +120,7 @@ exports.signUp= async (req,res)=>
 
 
         //match password and confirm password
-        if(password!==cnfPassword)
+        if(password!==confirmPassword)
         {
             return res.status(400).json({
                 success:false,
@@ -165,7 +165,7 @@ exports.signUp= async (req,res)=>
             gender:null,
             DOB:null,
             About:null,
-            contact:phone,
+            contact:null,
         })
 
          //create entry in data base

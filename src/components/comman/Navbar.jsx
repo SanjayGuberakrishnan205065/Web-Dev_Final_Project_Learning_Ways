@@ -30,7 +30,7 @@ export default function Navbar() {
   const location = useLocation();
 
   const matchRoute = (route) => {
-    return matchPath({ path: route }, location.pathname);
+    return matchPath({ path:route }, location.pathname);
   };
 
   // fetch the redux central date by using the react hook useSelector

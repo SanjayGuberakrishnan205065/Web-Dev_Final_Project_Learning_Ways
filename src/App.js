@@ -10,13 +10,22 @@ import Login from "./pages/Login"
 import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex-col font-inter">
     <Navbar/>
     <Routes>
-      <Route path="/" element={<Home/>}/>
+
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        {/* <Route path="courses/:courseId" element={<CourseDetails />} /> */}
+        {/* <Route path="catalog/:catalogName" element={<Catalog />} /> */}
+
+
       <Route
           path="signup"
           element={
@@ -61,16 +70,6 @@ function App() {
             </OpenRoute>
           }
         />  
-
-         <Route
-          path="/about"
-          element={
-            <OpenRoute>
-         <About/>
-            </OpenRoute>
-          }
-        />  
-
     </Routes>
 
     </div>

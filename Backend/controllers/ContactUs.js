@@ -1,4 +1,4 @@
- const mailSender  = require("../utils/mailSender");
+ const {mailSender}  = require("../utils/mailSender");
 
 
 
@@ -26,7 +26,7 @@ exports.contactUs = async (req, res) =>
             })
         }
         // 3. Send mail to LearningWays.com 
-       const  ourEmail ="learningways@gmail.com"
+       const  ourEmail ="amarjadhavchegg@gmail.com"
         await mailSender(ourEmail, 
                            `Mail received from student ${firstName} ${lastName}`,
                            `The query of student is : ${message}`);

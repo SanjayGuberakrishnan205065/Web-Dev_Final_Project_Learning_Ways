@@ -123,9 +123,9 @@ export function login(email, password, navigate) {
       dispatch(setUser({ ...response.data.user, image: userImage }))
 
       // set the localStorage in that set the reciveded token with convert into string fron the response
-      // localStorage.setItem("token", JSON.stringify(response.data.token))
+      localStorage.setItem("token", JSON.stringify(response.data.token))
 
-      // endd of above all process navigate to dash board my profile section 
+      // end of above all process navigate to dash board my profile section 
       navigate("/dashboard/my-profile")
       // navigate("/")
     } catch (error) {

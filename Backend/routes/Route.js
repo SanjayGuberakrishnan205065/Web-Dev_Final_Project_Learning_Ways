@@ -174,7 +174,7 @@ router.get("/profile/getEnrolledCpourse", auth,getEnrolledCourses);
 router.put("/profile/updatedDisplyPicture", auth,updateDisplayPicture)
 
 //Contact Us 
-router.post("/profile/contactUs", auth,contactUs)
+router.post("/profile/contactUs",contactUs)
 
 //********************************************************************************************************************
 //                                               Payment Route

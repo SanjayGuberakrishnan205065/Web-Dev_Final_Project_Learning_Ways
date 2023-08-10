@@ -18,7 +18,7 @@ exports.imageUploader =async (file, folder, height, quality)=>{
 
         
     } catch (error) {
-        console.log("Fail to send mail ", error.message);
+        console.log("Fail to  uploade image  ", error.message);
 
        
     }

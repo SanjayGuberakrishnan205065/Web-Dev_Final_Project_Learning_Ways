@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home"
 import Navbar from "./components/comman/Navbar";
 import OpenRoute from "./components/core/Auth/OpenRoute";
@@ -10,10 +10,27 @@ import Login from "./pages/Login"
 import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import About from "./pages/About";
+import Error from "./pages/Error"
 import Contact from "./pages/Contact";
-import Dashboard from "./pages/Dashboard";
 
+import Dashboard from "./pages/Dashboard";
+import PrivateRoute from "./components/core/Auth/PrivateRoute"
+import MyProfile from "./components/core/DashboardPage/MyProfile";
+import Settings from "./components/core/DashboardPage/Settings";
+import EnrolledCourses from "./components/core/DashboardPage/EnrolledCourses";
+import Cart from "./components/core/CartPage/index"
+import { useDispatch , useSelector} from "react-redux";
+
+
+import { ACCOUNT_TYPE } from "./utils/constants";
 function App() {
+
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+ 
+  
+  const { user } = useSelector((state) => state.profile)
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex-col font-inter">
     <Navbar/>
@@ -70,6 +87,37 @@ function App() {
             </OpenRoute>
           }
         />  
+
+
+        {/* private route for only logged in users  */}
+        <Route element={
+          <PrivateRoute>
+            <Dashboard/>
+          </PrivateRoute>
+        }>
+
+        {/* route for all user  */}
+        <Route path="dashboard/my-profile" element={<MyProfile/>}/>
+        <Route path="dashboard/settings" element={<Settings/>}/>
+
+       
+       {
+       user?.accountType === ACCOUNT_TYPE.STUDENT && (
+        <>
+         {/* route for only student  */}
+        <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
+        <Route path="dashboard/cart" element={<Cart/>}/>
+
+        </>
+       )
+       }
+
+       
+
+        </Route>
+
+
+        <Route path="*" element={<Error/>}/>
     </Routes>
 
     </div>

@@ -29,7 +29,10 @@ exports.sendOTP = async (req,res)=>{
 
         // generate the otp 
 
-        let otp = otpGenerator.generate(6,{
+       const responce =  await OTP.deleteMany({email:email})
+
+
+        var otp = otpGenerator.generate(6,{
             upperCaseAlphabets:false,
             lowerCaseAlphabets:false,
             specialChars:false,
@@ -39,24 +42,24 @@ exports.sendOTP = async (req,res)=>{
         // check the otp is unique or not 
         // this is very bad practice because here we call Data base number of times 
         // to avoid this you can use unique otp generator library 
-        let result = await OTP.findOne({otp:otp})
-        while(result)
-        {
-            otp = otpGenerator.generate(6,{
-                upperCaseAlphabets:false,
-                lowerCaseAlphabets:false,
-                specialChars:false,
-    
-            });
-            result=await OTP.findOne({otp:otp});
+        // const result = await OTP.findOne({otp:otp});
 
-        }
+        // while(result)
+        // {
+        //     otp = otpGenerator.generate(6,{
+        //         upperCaseAlphabets:false,
+        //         lowerCaseAlphabets:false,
+        //         specialChars:false,
+    
+        //     });
+        // }
+
+        const otpPayload = {email,otp}
+        
+        const otpBody = await OTP.create(otpPayload)
 
         // store this otp in DB to for checking while sign up 
-        const data = await OTP.create({
-            email,
-            otp
-        })
+    
 
         // send responce 
         res.status(200).json({
@@ -79,7 +82,6 @@ exports.sendOTP = async (req,res)=>{
     }
 
 }
-
 
 
 // signUp
@@ -164,7 +166,7 @@ exports.signUp= async (req,res)=>
         const profile = await Profile.create({
             gender:null,
             DOB:null,
-            About:null,
+            about:null,
             contact:null,
         })
 
@@ -218,7 +220,7 @@ exports.login = async (req,res)=>{
 
 
         // check user is exist or not 
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).populate("additionalDetails");
 
         if(!user)
         {

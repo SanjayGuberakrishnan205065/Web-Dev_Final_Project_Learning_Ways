@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ramonak/react-progress-bar": "^5.0.3",
     "@reduxjs/toolkit": "^1.9.5",
     "animation": "^0.1.3",
     "axios": "^1.4.0",
@@ -13,11 +14,13 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.10.1",
     "react-otp-input": "^3.0.4",
+    "react-rating-stars-component": "^2.2.0",
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
     "react-type-animation": "^3.1.0",
     "redux-toolkit": "^1.1.2",
+    "star-components": "^1.0.0",
     "web-vitals": "^2.1.4"
   },
   "repository": {

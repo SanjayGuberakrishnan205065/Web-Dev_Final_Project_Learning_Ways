@@ -56,11 +56,12 @@ export default function ContactUsForm() {
 
   return (
     <form
-      className="flex flex-col gap-7"
+      className="flex flex-col lg:gap-7"
       onSubmit={handleSubmit(submitContactForm)}
     >
-      <div className=" flex flex-col gap-7 ">
-        <div className="flex flex-col gap-5 lg:flex-row">
+      <div className=" flex flex-col lg:gap-7 gap-2">
+
+        <div className="flex flex-col lg:gap-5 gap-2 lg:flex-row">
           {/* first name  */}
           <div className="flex flex-col gap-2 lg:w-[48%]">
             <label htmlFor="firstName" className="lable-style">

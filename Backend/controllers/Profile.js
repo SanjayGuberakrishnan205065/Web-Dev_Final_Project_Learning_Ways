@@ -3,6 +3,8 @@ const { mongoose } = require("mongoose");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const {imageUploader} = require("../utils/imageUploader");
+const { response } = require("express");
+const bcrypt = require("bcrypt")
 
 
 
@@ -49,17 +51,17 @@ exports.updateProfile = async (req, res)=>{
     profileDetails.contact=contact;
 
     await profileDetails.save();
-
+    const updatedUser= await User.findById(userId).populate("additionalDetails");
 
     // Send Positive response
     res.status(200).json({
       success: true,
       message: "Profile updated successfully",
-     profileDetails,
+       updatedUser,
     });
   } catch (error) {
     console.log(error);
-    return res.status(401).json({
+    return res.status(500).json({
       success: false,
       message: "Failed to update Profile ",
     });
@@ -189,8 +191,9 @@ exports.getEnrolledCourses = async (req, res) => {
 exports.updateDisplayPicture = async (req, res) => {
   try {
     const displayPicture = req.files.displayPicture
-    const userId =req.user.id; 
+    const userId =req.user.id 
     // const userId= 4555
+    console.log("image " ,displayPicture)
     console.log(userId)
     const image = await imageUploader(
       displayPicture,
@@ -199,11 +202,12 @@ exports.updateDisplayPicture = async (req, res) => {
       1000
     )
     console.log(image)
+    console.log(image.secure_url)
     const updatedProfile = await User.findByIdAndUpdate(
-      { _id: new mongoose.Types.ObjectId(userId) },
+      { _id: userId },
       { image: image.secure_url },
       { new: true }
-    )
+    ).populate("additionalDetails")
     res.send({
       success: true,
       message: `Image Updated successfully`,
@@ -217,3 +221,63 @@ exports.updateDisplayPicture = async (req, res) => {
     })
   }
 };
+
+
+// change Password 
+
+exports.changePassword = async (req, res)=>
+{
+  try {
+
+    /**
+     required steps to change password 
+     1. get password and conform password from req 
+     2. validate data
+     3. chack password and corrent password is match 
+     4. hash the password 
+     5. update the new password in database 
+     6. send responce 
+
+     */
+
+     const {password, confirmPassword} = req.body;
+     const userId = req.user.id;
+
+     if(!password || !confirmPassword || !userId)
+     {
+      return res.status(401).json({
+        success:false,
+        message: "Please enter password and confirmPassword both"
+      })
+     }
+
+     if(password!==confirmPassword)
+     {
+      return response.status(401).json({
+        success:false,
+        message: "password and confirmPassword not match "
+      })
+     }
+
+     const hashedPassword = await bcrypt.hash(password,10);
+
+     const updatedUser = await User.findByIdAndUpdate({_id:userId},
+      {password:hashedPassword},{new:true})
+
+
+      res.status(200).json({
+        success:true,
+        message:"Password changed successfully"
+      })
+
+    
+  } catch (error) {
+
+    console.log(error)
+    return res.status(500).json({
+      success:false,
+      message:"Fail to change Password"
+    })
+    
+  }
+}

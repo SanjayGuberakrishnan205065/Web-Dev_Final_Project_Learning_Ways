@@ -1,17 +1,30 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+// Auth Endpoints
+
+export const authEndpoints = {
+  SENDOTP_API: BASE_URL + "/auth/sendotp",
+  SIGNUP_API: BASE_URL + "/auth/signup",
+  LOGIN_API: BASE_URL + "/auth/login",
+  RESET_PASSWORD_TOKEN_API: BASE_URL + "/auth/reset-password-token",
+  RESET_PASSWORD_API: BASE_URL + "/auth/reset-password",
+};
+
+// Profile Endpoints
+export const profileEndpoints = {
+  CONTACT_US_API: BASE_URL + "/profile/contactUs",
+  GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
+  GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses"
+
+};
+
+// Setting Endpoints
+
+export const settingsEndpoints = {
+  UPDATE_PROFILE_PICTURE_API: BASE_URL + "/profile/updatedProfilePicture",
+  UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile",
+  CHANGE_PASSWORD_API: BASE_URL + "/profile/changePassword",
+  DELETE_PROFILE_API: BASE_URL + "/profile/deleteAccount",
+};
 
 
-// Auth Endpoints 
-
-export const authEndpoints ={
-    SENDOTP_API : BASE_URL + "/auth/sendotp",
-    SIGNUP_API : BASE_URL + "/auth/signup",
-    LOGIN_API : BASE_URL + "/auth/login",
-    RESET_PASSWORD_TOKEN_API: BASE_URL + "/auth/reset-password-token",
-    RESET_PASSWORD_API :BASE_URL + "/auth/reset-password"
-   
-}
-
-export const profileEndpoints ={
-    CONTACT_US_API : BASE_URL+ "/profile/contactUs"
-}

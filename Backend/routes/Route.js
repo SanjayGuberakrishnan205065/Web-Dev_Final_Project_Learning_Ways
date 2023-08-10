@@ -9,7 +9,7 @@ const {createCategory, getAllCategory,categoryPageDetails}=require("../controlle
 const {contactUs}=require("../controllers/ContactUs");
 const {createCourse,getAllCourse,getCourseDetails, UpdateCourse, deleteCourse}=require("../controllers/Course");
 const {capturePayment,verifySignature}=require("../controllers/Payments");
-const {updateProfile,deleteAccount,getAllUser, getEnrolledCourses, updateDisplayPicture}=require("../controllers/Profile");
+const {updateProfile,deleteAccount,getAllUser, getEnrolledCourses, updateDisplayPicture, changePassword}=require("../controllers/Profile");
 const {createRating,averageRating,courseRating,getAllReating}=require("../controllers/Rating");
 const {resetPasswordToken,resetPassword}=require("../controllers/ResetPassword");
 const {createSection,UpdateSection,deleteSection}=require("../controllers/Section");
@@ -165,13 +165,17 @@ router.put("/profile/updateProfile", auth,updateProfile)
 router.get("/profile/getUserDetails", auth,getAllUser);
 
 // Delete acount 
-router.delete("/profile/deleteProfile",auth,deleteAccount)
+router.delete("/profile/deleteAccount",auth,deleteAccount)
 
 // Get enrolled courses 
-router.get("/profile/getEnrolledCpourse", auth,getEnrolledCourses);
+router.get("/profile/getEnrolledCourses", auth,getEnrolledCourses);
 
 //Updated display picture 
-router.put("/profile/updatedDisplyPicture", auth,updateDisplayPicture)
+router.put("/profile/updatedProfilePicture", auth,updateDisplayPicture)
+
+// Change password 
+router.put("/profile/changePassword", auth,changePassword)
+
 
 //Contact Us 
 router.post("/profile/contactUs",contactUs)

@@ -231,6 +231,8 @@ exports.login = async (req,res)=>{
         }
 
 
+
+        
         //generate jwt after password match 
         if(await bcrypt.compare(password,user.password)){
 

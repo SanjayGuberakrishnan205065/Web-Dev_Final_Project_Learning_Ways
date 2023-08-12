@@ -28,3 +28,14 @@ export const settingsEndpoints = {
 };
 
 
+// Course Endpoints 
+
+export const courseEndpoints ={
+  
+  COURSE_CATEGORIES_API : BASE_URL + "/course/showAllCategories",
+  CREATE_COURSE_API: BASE_URL + "/course/createCourse",
+  UPDATE_COURSE_API: BASE_URL +"/course/updateCourse",
+  CREATE_SECTION_API: BASE_URL + "/course/addSection",
+  CREATE_SUBSECTION_API: BASE_URL + "/course/addSubSection",
+
+}

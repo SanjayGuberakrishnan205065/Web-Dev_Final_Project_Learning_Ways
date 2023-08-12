@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 
 export default function Footer() {
-  console.log(FooterLink1);
+  // console.log(FooterLink1);
   return (
     // main div
     <div className="w-full">

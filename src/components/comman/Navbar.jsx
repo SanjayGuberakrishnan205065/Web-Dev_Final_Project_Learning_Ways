@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo/logo-no-background.png";
 import { NavbarLinks } from "../../data/navbar-links";
@@ -6,26 +6,16 @@ import { useSelector } from "react-redux";
 import {AiOutlineShoppingCart}  from "react-icons/ai"
 import {MdKeyboardArrowDown}  from "react-icons/md"
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
+import { ACCOUNT_TYPE } from "../../utils/constants";
+import { fetchCourseCategories } from "../../services/operations/courseAPI";
 
 
- // testing data 
- const subLinks = [
-  {
-    title:"Python",
-    link:"/python"
-  },
-  {
-    title:"WEB-DEV",
-    link:"/webdev"
-  },
-  {
-    title:"C++",
-    link:"/c++"
-  },
  
-];
+ 
 
 export default function Navbar() {
+  // testing data 
+ const [subLinks,setSublinks]= useState([])
   // to check the current element clicked is color is yellow
   const location = useLocation();
 
@@ -39,6 +29,19 @@ export default function Navbar() {
   const { totalItems } = useSelector((state) => state.cart);
 
 
+  const fetchCtegories = async ()=>
+  {
+    const result = await fetchCourseCategories();
+    console.log(result);
+    if(result)
+    {
+      setSublinks(result)
+    }
+  }
+  useEffect(()=>{
+     fetchCtegories();
+
+  },[])
  
 
 
@@ -77,8 +80,8 @@ export default function Navbar() {
                       
                         subLinks.length? (
                           subLinks.map((sublink,index)=>(
-                            <Link to={sublink.link} key={index} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50 z-10">
-                              <p className=" text-richblack-900">{sublink.title}</p>
+                            <Link to={sublink.name} key={index} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50 z-10">
+                              <p className=" text-richblack-900">{sublink.name}</p>
                             </Link>
                           ))
 
@@ -117,7 +120,7 @@ export default function Navbar() {
 
           
         {   //cart
-          user && user?.acountType!= "Instructor" &&(
+          user && user?.accountType!= ACCOUNT_TYPE.INSTRUCTOR && (
             <Link to={"dashboard/cart"} className=" relative">
             <AiOutlineShoppingCart/>
             {totalItems>0 &&(

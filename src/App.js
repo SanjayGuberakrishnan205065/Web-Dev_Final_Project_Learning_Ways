@@ -19,6 +19,7 @@ import MyProfile from "./components/core/DashboardPage/MyProfile";
 import Settings from "./components/core/DashboardPage/Settings";
 import EnrolledCourses from "./components/core/DashboardPage/EnrolledCourses";
 import Cart from "./components/core/CartPage/index"
+import AddCourse from "./components/core/DashboardPage/AddCourse";
 import { useDispatch , useSelector} from "react-redux";
 
 
@@ -108,6 +109,16 @@ function App() {
         <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
         <Route path="dashboard/cart" element={<Cart/>}/>
 
+        </>
+       )
+       }
+       
+       {
+       user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+        <>
+         {/* route for only student  */}
+        <Route path="dashboard/add-course" element={<AddCourse/>}/>
+        
         </>
        )
        }

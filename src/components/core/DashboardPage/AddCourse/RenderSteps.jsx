@@ -2,8 +2,8 @@ import React from "react";
 import { FaCheck } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import CourseInformationForm from "./CourseInformation/CourseInformationForm";
-// import CourseBuilderForm  from './CourseInformation/CourseBuilderForm'
-// import PublishForm from './CourseInformation/PublishForm';
+import CourseBuilderForm from "./CourseBuilder/CourseBuilderForm";
+import PublishForm from './PublishCourse/index'
 
 export default function RenderSteps() {
   const { step } = useSelector((state) => state.course);
@@ -37,7 +37,7 @@ export default function RenderSteps() {
                             : " bg-richblack-800 border-richblack-700 text-richblack-300"
                         }
                         ${step > item.id && "bg-yellow-50 text-yellow-50"}`}
-                key={index}
+               
               >
                 {step > item.id ? (
                   <FaCheck className="font-bold text-richblack-800" />
@@ -64,7 +64,7 @@ export default function RenderSteps() {
       {/* headinngs */}
 
       <div className="relative mb-16 flex w-full select-none justify-between">
-        {steps.map((item, index) => {
+        {steps.map((item) => {
           return (
             <div key={item.id}
              className="flex min-w-[130px] flex-col items-center gap-y-2">
@@ -83,8 +83,8 @@ export default function RenderSteps() {
       {/* related forms  */}
       <div>
         {step === 1 && <CourseInformationForm />}
-        {/* {step===2 && <CourseBuilderForm/>}
-        {step===3 && <PublishForm/>} */}
+        {step === 2 && <CourseBuilderForm/>}
+        {step===3 && <PublishForm/>}
       </div>
     </div>
   );

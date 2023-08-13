@@ -32,7 +32,7 @@ export default function Navbar() {
   const fetchCtegories = async ()=>
   {
     const result = await fetchCourseCategories();
-    console.log(result);
+    // console.log(result);
     if(result)
     {
       setSublinks(result)

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import RequirementField from "./RequirementField";
+import { MdNavigateNext } from "react-icons/md"
 import ChipInput from "./ChipInput";
 import { toast } from "react-hot-toast";
 
@@ -27,7 +28,7 @@ export default function CourseInformationForm() {
 
   // Required Things
   const dispatch = useDispatch();
-  const { course, editCourse } = useSelector((state) => state.course);
+  const { step, course, editCourse } = useSelector((state) => state.course);
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
 
@@ -153,6 +154,7 @@ export default function CourseInformationForm() {
     if (result) {
       dispatch(setStep(2));
       dispatch(setCourse(result));
+      
     }
     setLoading(false);
   };
@@ -322,7 +324,9 @@ export default function CourseInformationForm() {
           </button>
         )}
 
-        <IconBtn text={!editCourse ? "Next" : "Save Chnages"} />
+        <IconBtn text={!editCourse ? "Next" : "Save Chnages"} type={"submit"} >
+        <MdNavigateNext />
+        </IconBtn>
       </div>
     </form>
   );

@@ -57,7 +57,7 @@ export default function Sidebar() {
             onClick={() =>
               setConfirmationModal({
                 text1: "Are You Sure ?",
-                text2: "You will be logghed out of your Acount",
+                text2: "You will be logged out of your Acount",
                 btn1Text: "Logout",
                 btn2Text: "Cancel",
                 btn1Handler: () => dispatch(logout(navigate)),

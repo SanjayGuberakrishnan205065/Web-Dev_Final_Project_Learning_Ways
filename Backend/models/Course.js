@@ -38,7 +38,7 @@ const courseSchema = new mongoose.Schema({
   ratingAndReview: [
    {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Rating",
+    ref: "Reating",
     // required: true,
    }
 ],
@@ -49,7 +49,7 @@ const courseSchema = new mongoose.Schema({
     required: true,
   },
   tag: {
-    type:String,
+    type:[String],
   },
 
   studentEnrolled: [
@@ -60,15 +60,16 @@ const courseSchema = new mongoose.Schema({
     },
    
   ],
-  instruction :{
+  instructions :{
       
     type:[String]
   }, 
   status:{
     type:String,
-    enum :["Draft, Published"]
+    enum :["Draft", "Published"]
 
-  }
+  },
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Course", courseSchema);

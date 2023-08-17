@@ -18,6 +18,8 @@ export default function Navbar() {
  const [subLinks,setSublinks]= useState([])
   // to check the current element clicked is color is yellow
   const location = useLocation();
+  const { trackCourseUpdate } = useSelector((state) => state.course);
+
 
   const matchRoute = (route) => {
     return matchPath({ path:route }, location.pathname);
@@ -27,23 +29,27 @@ export default function Navbar() {
   const { token } = useSelector((state) => state.auth); // destructor thr token fro the auth sclice that stor in the sclice folder of central data store
   const { user } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
+  const [loading, setLoading] = useState(false)
+
 
 
   const fetchCtegories = async ()=>
   {
+    setLoading(true)
     const result = await fetchCourseCategories();
     // console.log(result);
     if(result)
     {
       setSublinks(result)
     }
+    setLoading(false)
   }
   useEffect(()=>{
      fetchCtegories();
 
-  },[])
- 
-
+  },[trackCourseUpdate])
+  
+  console.log("sublink",subLinks.length);
 
   return (
     <div className=" flex h-14  items-center justify-center  border-b-[1px] border-b-richblack-700">
@@ -76,14 +82,30 @@ export default function Navbar() {
                                 translate-x-[80%]
                                 translate-y-[-30%] h-6 w-6 rotate-45  bg-richblack-5"></div>
     
+                     
                       {
-                      
-                        subLinks.length? (
-                          subLinks.map((sublink,index)=>(
-                            <Link to={sublink.name} key={index} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50 z-10">
-                              <p className=" text-richblack-900">{sublink.name}</p>
-                            </Link>
-                          ))
+                        loading ? (
+                          <p className="text-center">Loading...</p>
+                        ) :  subLinks.length? (
+
+                          <>
+                            {
+                               subLinks?.filter((sublink)=>sublink?.course?.length>0)?.map((sublink,i)=>(
+                                <Link
+                                  to={`/catalog/${sublink.name
+                                    .split(" ")
+                                    .join("-")
+                                    .toLowerCase()}`}
+                                  className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
+                                  key={i}
+                                >
+                                  <p>{sublink.name}</p>
+                                </Link>
+                                
+                              ))
+
+                            }
+                          </>
 
                         ):(<div> No Category Avilable </div>)
                        

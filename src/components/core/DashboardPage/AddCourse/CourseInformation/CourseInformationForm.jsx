@@ -6,13 +6,14 @@ import RequirementField from "./RequirementField";
 import { MdNavigateNext } from "react-icons/md"
 import ChipInput from "./ChipInput";
 import { toast } from "react-hot-toast";
+import { COURSE_STATUS } from "../../../../../utils/constants";
 
 import {
   fetchCourseCategories,
   editCourseDetails,
   addCourseDetails,
 } from "../../../../../services/operations/courseAPI";
-import { setCourse, setStep } from "../../../../../slices/courseSlice";
+import { setCourse, setStep,setTrackCourseUpdate } from "../../../../../slices/courseSlice";
 import IconBtn from "../../../../comman/IconBtn";
 import Upload from "../Upload";
 
@@ -28,7 +29,7 @@ export default function CourseInformationForm() {
 
   // Required Things
   const dispatch = useDispatch();
-  const { step, course, editCourse } = useSelector((state) => state.course);
+  const { step, course, editCourse, trackCourseUpdate } = useSelector((state) => state.course);
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
 
@@ -54,7 +55,7 @@ export default function CourseInformationForm() {
       setValue("courseShortDes", course.courseDescription);
       setValue("coursePrice", course.price);
       setValue("courseTags", course.tag);
-      setValue("courseBenifits", course.whatYouWillLearn);
+      setValue("benefit", course.whatYouWillLearn);
       setValue("courseCategory", course.category);
       setValue("courseRequirements", course.instructions);
       setValue("courseImage", course.thimbNail);
@@ -68,14 +69,13 @@ export default function CourseInformationForm() {
     const currentValues = getValues();
     if (
       currentValues.courseTitle !== course.courseName ||
-      currentValues.courseShortDes !== course.courseName ||
-      currentValues.coursePrice !== course.courseName ||
-      // currentValues.courseTags.toString() !== course.tag.toString()||
-      currentValues.courseBenifits !== course.whatYouWillLearn ||
+      currentValues.courseShortDes !== course.courseDescription ||
+      currentValues.coursePrice !== course.price ||
+      currentValues.courseTags.toString() !== course.tag.toString()||
+      currentValues.benefit !== course.whatYouWillLearn ||
       currentValues.courseCategory._id !== course.category._id ||
-      currentValues.courseRequiremwnts.toString() !==
-        course.instructions.toString()
-      // currentValues.courseImage !== course.thimbNail
+      currentValues.courseRequiremwnts.toString() !==course.instructions.toString()||
+      currentValues.courseImage !== course.thimbNail
     ) {
       return true;
     } else return false;
@@ -96,7 +96,7 @@ export default function CourseInformationForm() {
           formData.append("courseName", data.courseTitle);
         }
         if (currentValues.courseShortDesc !== course.courseDescription) {
-          formData.append("courseDescription", data.courseShortDesc);
+          formData.append("courseDescription", data.courseShortDes);
         }
         if (currentValues.coursePrice !== course.price) {
           formData.append("price", data.coursePrice);
@@ -104,8 +104,8 @@ export default function CourseInformationForm() {
         if (currentValues.courseTags.toString() !== course.tag.toString()) {
           formData.append("tag", JSON.stringify(data.courseTags));
         }
-        if (currentValues.courseBenefits !== course.whatYouWillLearn) {
-          formData.append("whatYouWillLearn", data.courseBenefits);
+        if (currentValues.benefit !== course.whatYouWillLearn) {
+          formData.append("whatYouWillLearn", data.benefit);
         }
         if (currentValues.courseCategory._id !== course.category._id) {
           formData.append("category", data.courseCategory);
@@ -129,6 +129,7 @@ export default function CourseInformationForm() {
         setLoading(false);
         if (result) {
           dispatch(setStep(2));
+          dispatch(setTrackCourseUpdate(!trackCourseUpdate))
           dispatch(setCourse(result));
         } else {
           toast.error("No changes made to the form");
@@ -138,15 +139,17 @@ export default function CourseInformationForm() {
     }
 
     // create course mode
+    
+
     const formData = new FormData();
     formData.append("courseName", data.courseTitle);
     formData.append("courseDescription", data.courseShortDes);
     formData.append("price", data.coursePrice);
     formData.append("tag", JSON.stringify(data.courseTags));
-    formData.append("whatYouWillLearn", data.benifit);
+    formData.append("whatYouWillLearn", data.benefit);
     formData.append("category", data.courseCategory);
-    // formData.append("status", COURSE_STATUS.DRAFT)
-    formData.append("instructions", JSON.stringify(data.courseRequirements));
+    formData.append("status", COURSE_STATUS.DRAFT)
+    formData.append("instructions", JSON.stringify(data.courseRequirements))
     formData.append("thumbNailImage", data.courseImage);
 
     setLoading(true);
@@ -280,19 +283,19 @@ export default function CourseInformationForm() {
         register={register}
         setValue={setValue}
         errors={errors}
-        editData={editCourse ? course?.thumbnail : null}
+        editData={editCourse ? course?.thumbNail : null}
       />
 
       {/* benifit of the course  */}
       <div className="flex flex-col space-y-2">
-        <label htmlFor="benifit" className=" lable-style">
+        <label htmlFor="benefit" className=" lable-style">
           {" "}
-          Benifit of the Course <sup className="text-pink-200">*</sup>
+          Benefits of the Course <sup className="text-pink-200">*</sup>
         </label>
         <textarea
-          id="benifit"
+          id="benefit"
           placeholder="Enter Benifits of Course "
-          {...register("benifit", { required: true })}
+          {...register("benefit", { required: true })}
           className=" form-style resize-x-none min-h-[130px] w-full:"
         />
         {errors.benifit && (
@@ -304,7 +307,7 @@ export default function CourseInformationForm() {
 
       {/* instruction  */}
       <RequirementField
-        name="courseRequirement"
+        name="courseRequirements"
         label="Requirement"
         placeholder="Enter the Requirement for Couerse  "
         register={register}

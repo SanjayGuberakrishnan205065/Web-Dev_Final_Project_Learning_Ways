@@ -107,6 +107,10 @@ export default function NestedView({ handleChangeEditSectionName }) {
               </div>
             </summary>
 
+
+
+
+
             {/* Subsection Part  */}
             <div className="px-6 pb-4">
 
@@ -116,14 +120,20 @@ export default function NestedView({ handleChangeEditSectionName }) {
                   key={data?._id}
                   onClick={() => setViewSubsection(data)}
                   className="flex cursor-pointer items-center justify-between gap-x-3 border-b-2 border-b-richblack-600 py-2"  >
+
+
+                  {/* // title  */}
                   <div className="flex items-center gap-x-3 py-2 ">
                   <RxDropdownMenu className="text-2xl text-richblack-50" />
                   <p className="font-semibold text-richblack-50">
                    {data.title}</p>
                   </div>
 
+
+
+                 {/* subsection add and delete buttom  */}
                   <div 
-                  onClick={(e)=>e.stopPropagation()}
+                  onClick={(e)=>e.stopPropagation()} // this is for not effecet of onclick of above main subsection div that is setViewSection 
                   className=" flex  items-center gap-x-3">
                   <button
                   onClick={()=>setEditSubsection({...data,sectionId:section._id})}

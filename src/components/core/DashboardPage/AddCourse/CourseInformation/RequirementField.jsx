@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
+import { useSelector } from "react-redux";
+
 
 export default function RequirementField({
   name,
@@ -8,6 +10,8 @@ export default function RequirementField({
   setValue,
   getValue,
 }) {
+  const { editCourse, course } = useSelector((state) => state.course)
+
   const [requirement, setRequirement] = useState("");
   const [requirementList, setRequirementList] = useState([]);
 
@@ -27,6 +31,9 @@ export default function RequirementField({
   // register the input value in form on first render
 
   useEffect(() => {
+    if (editCourse) {
+      setRequirementList(course?.instructions)
+    }
     register(name, { required: true, validate: (value) => value.length > 0 });
   }, []);
 

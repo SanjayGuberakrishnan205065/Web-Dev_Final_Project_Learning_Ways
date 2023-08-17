@@ -64,7 +64,7 @@ exports.getAllCategory = async (req,res)=>{
 
         //get data from category module 
 
-        const  cataegory= await Category.find({},{name:true, description:true}) 
+        const  cataegory= await Category.find() 
         // data must have this name and the description parameter 
 
         res.status(200).json({

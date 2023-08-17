@@ -5,6 +5,7 @@ const initialState ={
     course:null,
     editCourse:false,
     paymentLoading :false,
+    trackCourseUpdation:false
 }
 
 const courseSclice = createSlice({
@@ -28,6 +29,10 @@ const courseSclice = createSlice({
             state.course=null
             state.editCourse=false
         },
+        setTrackCourseUpdate:(state,action)=>
+        {
+             state.trackCourseUpdation=action.payload
+        }
 
     }
 
@@ -38,7 +43,8 @@ export const {
     setCourse,
     setEditCourse,
     setPaymentLoading,
-    resetCourseState
+    resetCourseState,
+    setTrackCourseUpdate
 } = courseSclice.actions
 
 export default courseSclice.reducer

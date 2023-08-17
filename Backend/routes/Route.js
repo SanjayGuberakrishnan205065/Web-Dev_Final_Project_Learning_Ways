@@ -7,7 +7,7 @@ const router = express.Router();
 const {sendOTP,signUp,login} =require("../controllers/Auth");
 const {createCategory, getAllCategory,categoryPageDetails}=require("../controllers/Category");
 const {contactUs}=require("../controllers/ContactUs");
-const {createCourse,getAllCourse,getCourseDetails, UpdateCourse, deleteCourse}=require("../controllers/Course");
+const {createCourse,getAllCourse,getFullCourseDetails, UpdateCourse, deleteCourse, getInstructorCourses, dummy}=require("../controllers/Course");
 const {capturePayment,verifySignature}=require("../controllers/Payments");
 const {updateProfile,deleteAccount,getAllUser, getEnrolledCourses, updateDisplayPicture, changePassword}=require("../controllers/Profile");
 const {createRating,averageRating,courseRating,getAllReating}=require("../controllers/Rating");
@@ -84,8 +84,10 @@ router.post("/course/updateCourse", auth, isInstructor, UpdateCourse);
 router.get("/course/getAllCourses",getAllCourse);
 
 // Get detail of perticularr course 
-router.get("/course/getCourseDetails",getCourseDetails);
+router.post("/course/getFullCourseDetails",auth,getFullCourseDetails);
 
+//Get Instructor Courses 
+router.get("/course/getInstructorCourses",auth,isInstructor,getInstructorCourses)
 
 // delete course 
 router.delete("/course/deleteCourse",deleteCourse);

@@ -52,3 +52,7 @@ export const courseEndpoints ={
 
 
 }
+
+export const catalogData = {
+  CATALOGPAGEDETAILS_API:BASE_URL + "/course/getCategoryPageDetails"
+}

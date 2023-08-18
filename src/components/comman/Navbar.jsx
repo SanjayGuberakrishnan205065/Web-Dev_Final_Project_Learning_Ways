@@ -49,7 +49,7 @@ export default function Navbar() {
 
   },[trackCourseUpdate])
   
-  console.log("sublink",subLinks.length);
+  // console.log("sublink",subLinks.length);
 
   return (
     <div className=" flex h-14  items-center justify-center  border-b-[1px] border-b-richblack-700">

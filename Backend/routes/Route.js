@@ -133,7 +133,7 @@ router.post("/course/createCategory",auth,isAdmin,createCategory);
 router.get("/course/showALLCategories", getAllCategory);
 
 //Get categorypage details 
-router.get("/course/getCategoryPageDetails",categoryPageDetails)
+router.post("/course/getCategoryPageDetails",categoryPageDetails)
 
 
 

@@ -9,14 +9,14 @@ const categorySchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+  
     
   },
   
   course: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Course",
-    required: true,
+
   }],
 
   

@@ -1,5 +1,10 @@
 const Category = require("../models/Category");
 const Course =require("../models/Course");
+const mongoose = require("mongoose")
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max)
+  }
 
 
 
@@ -89,78 +94,190 @@ exports.getAllCategory = async (req,res)=>{
 
 //category Page details 
 
-exports.categoryPageDetails = async (req,res)=>{
+
+
+// exports.categoryPageDetails = async (req,res)=>{
+
+//     try {
+//         /*
+//         Required steps to Get the category page details 
+
+//         1. Get categoryId 
+//         2. Get courses for perticular category 
+//         3. validation
+//         4. Get course for different category 
+//         5. Get top selling courses 
+//         6. return responce.
+
+//          */
+
+//         // 1. Get categoryId 
+//         const {categoryId}= req.body;
+//         console.log("category id", categoryId)
+
+//         // 2. Get courses for perticular category 
+//         // const objectId = new mongoose.Types.ObjectId(categoryId);
+
+//         const selectedCategory = await Category.findById(categoryId)
+//         .populate({
+//             path: "course",
+//             match: { status: "Published" },
+//             populate: "ratingAndReview",
+//           }).exec();
+//         // 3. validation
+//         if(!selectedCategory)
+//         {
+//             return res.status(404).json({
+//                 success:false,
+//                 message:"Category data not found "
+//             })
+//         }
+
+
+//          // Handle the case when there are no courses
+//     //     if (selectedCategory.course.length === 0) {
+//     //         console.log("No courses found for the selected category.")
+//     //         return res.status(404).json({
+//     //             success: false,
+//     //             message: "No courses found for the selected category.",
+//     //         })
+//     //         }
+  
+//     //     // 4. Get course for different category 
+//     //      const categoriesExceptSelected = await Category.find({
+//     //         _id: { $ne: categoryId },
+//     //       })
+
+//     //       let differentCategory = await Category.findOne(
+//     //         categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
+//     //           ._id
+//     //       )
+//     //         .populate({
+//     //           path: "course",
+//     //           match: { status: "Published" },
+//     //         })
+//     //         .exec()
+
+        
+        
+//     //     // 5. Get top selling courses 
+//     //     const allCategories = await Category.find()
+//     //     .populate({
+//     //       path: "course",
+//     //       match: { status: "Published" },
+//     //     })
+//     //     .exec()
+//     //   const allCourses = allCategories.flatMap((category) => category.courses)
+//     //   const mostSellingCourses = allCourses
+//     //     .sort((a, b) => b.sold - a.sold)
+//     //     .slice(0, 10)
+  
+          
+
+//         // 6. return responce.
+        
+//         res.status(200).json({
+//             success: true,
+//             data: {
+//               selectedCategory,
+//             //   differentCategory,
+//             //   mostSellingCourses,
+//             },
+//           })
+        
+
+        
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(500).json({
+//             success:false,
+//             message:"Failed to fetch category data."
+//         })
+        
+//     }
+// }
+
+exports.categoryPageDetails = async (req, res) => {
     try {
-        /*
-        Required steps to Get the category page details 
+      const { categoryId } = req.body
+      console.log("cate",categoryId)
+    //  const objectId = new mongoose.Types.ObjectId(categoryId);
 
-        1. Get categoryId 
-        2. Get courses for perticular category 
-        3. validation
-        4. Get course for different category 
-        5. Get top selling courses 
-        6. return responce.
-
-         */
-
-        // 1. Get categoryId 
-        const {categoryId}= req.body;
-
-        // 2. Get courses for perticular category 
-        const selectedCategory = await Category.findById(categoryId)
-                                                       .populate("course").exec();
-        // 3. validation
-        if(!selectedCategory)
-        {
-            return res.status(404).json({
-                success:false,
-                message:"Category data not found "
-            })
-        }
-
-        // 4. Get course for different category 
-        const differentCategories = await Category.findById({_id:{$ne:categoryId}})  // not equal to category id
-                                                                .populate("course").exec();
-
-        if(!differentCategories)
-        {
-            return res.status(404).json({
-                success:false,
-                message:"Different Category data not found "
-            })
-        }
-        // 5. Get top selling courses 
-        const topSelling = Course.aggregate([
-            // Unwind the studentEnrolled array to create separate documents for each student ID
-            { $unwind: "$studentEnrolled" },
-            // Group the documents by courseId and count the number of occurrences for each courseId
-            { $group: { _id: "$_id", studentEnrolled: { $sum: 1 } } },
-            // Sort the courses in descending order based on the studentEnrolled
-            { $sort: { studentEnrolled: -1 } },
-            // Limit the output to the top 10 courses
-            { $limit: 10 }
-          ])
-
-        // 6. return responce.
-        
-        return res.status(200).json({
-            success:true,
-            data:{
-                selectedCategory,
-                differentCategories,
-                topSelling,
-            },
-            message:"All category data send successfully "
+  
+      // Get courses for the specified category
+      const selectedCategory = await Category.findById(categoryId)
+        .populate({
+          path: "course",
+          match: { status: "Published" },
+          populate: "ratingAndReview",
         })
-        
+        .exec()
+  
+      console.log("SELECTED COURSE", selectedCategory)
+      // Handle the case when the category is not found
+      if (!selectedCategory) {
+        console.log("Category not found.")
+        return res
+          .status(404)
+          .json({ success: false, message: "Category not found" })
+      }
 
-        
+
+      // Handle the case when there are no courses
+      if (selectedCategory.course.length === 0) {
+        console.log("No courses found for the selected category.")
+        return res.status(404).json({
+          success: false,
+          message: "No courses found for the selected category.",
+        })
+      }
+  
+      // Get courses for other categories
+      const categoriesExceptSelected = await Category.find({
+        _id: { $ne: categoryId },
+      })
+      let differentCategory = await Category.findOne(
+        categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
+          ._id
+      )
+        .populate({
+          path: "course",
+          match: { status: "Published" },
+        })
+        .exec()
+      console.log()
+  
+      
+      // Get top-selling courses across all categories
+      const allCategories = await Category.find()
+        .populate({
+          path: "course",
+          match: { status: "Published" },
+          populate :{
+            path:"instructor"
+          }
+        })
+        .exec()
+      const allCourses = allCategories.flatMap((category) => category.course)
+      const mostSellingCourses = allCourses
+        .sort((a, b) => b.sold - a.sold)
+        .slice(0, 10)
+  
+      res.status(200).json({
+        success: true,
+        data: {
+          selectedCategory,
+          differentCategory,
+          mostSellingCourses,
+        },
+      })
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            success:false,
-            message:"Failed to fetch category data."
-        })
-        
+
+        console.log(error)
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        error: error.message,
+      })
     }
-}
+  }

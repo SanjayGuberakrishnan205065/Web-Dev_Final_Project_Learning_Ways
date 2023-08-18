@@ -186,7 +186,7 @@ export default function EditProfile() {
             {/* about  */}
             <div className="flex flex-col gap-2 lg:w-[48%]">
               <label htmlFor="about" className="lable-style">
-                First Name
+               About
               </label>
 
               <input

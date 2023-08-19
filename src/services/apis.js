@@ -56,3 +56,9 @@ export const courseEndpoints ={
 export const catalogData = {
   CATALOGPAGEDETAILS_API:BASE_URL + "/course/getCategoryPageDetails"
 }
+
+export const  studentEndpoint = {
+  COURSE_PAYMENT_API:BASE_URL + "/payment/capturePayment",
+  COURSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
+  SEND_PAYMENT_SUCCESS_EMAIL_API:+ "/payment/sendPaymentSuccessMail",
+}

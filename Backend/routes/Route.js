@@ -8,7 +8,7 @@ const {sendOTP,signUp,login} =require("../controllers/Auth");
 const {createCategory, getAllCategory,categoryPageDetails}=require("../controllers/Category");
 const {contactUs}=require("../controllers/ContactUs");
 const {createCourse,getAllCourse,getFullCourseDetails, UpdateCourse, deleteCourse, getInstructorCourses, dummy}=require("../controllers/Course");
-const {capturePayment,verifySignature}=require("../controllers/Payments");
+const {capturePayment,verifySignature, verifyPayment, sendPaymentSuccessEmail}=require("../controllers/Payments");
 const {updateProfile,deleteAccount,getAllUser, getEnrolledCourses, updateDisplayPicture, changePassword}=require("../controllers/Profile");
 const {createRating,averageRating,courseRating,getAllReating}=require("../controllers/Rating");
 const {resetPasswordToken,resetPassword}=require("../controllers/ResetPassword");
@@ -190,7 +190,10 @@ router.post("/profile/contactUs",contactUs)
 router.post("/payment/capturePayment", auth, isStudent, capturePayment)
 
 //Verify signiture 
-router.post("/payment/verifySignature", verifySignature)
+router.post("/payment/verifyPayment",auth,isStudent, verifyPayment)
+
+//aend payment success mail
+router.post("/payment/sendPaymentSuccessMail",auth,isStudent,sendPaymentSuccessEmail)
 
 
 

@@ -27,6 +27,7 @@ import { ACCOUNT_TYPE } from "./utils/constants";
 import MyCourses from "./components/core/DashboardPage/MyCourses";
 import EditCourse from "./components/core/DashboardPage/EditCourse";
 import Catalog from "./pages/Catalog";
+import CourseDetails from "./pages/CourseDetails";
 function App() {
 
   
@@ -44,7 +45,7 @@ function App() {
         <Route path="catalog/:catalogName" element={<Catalog/>} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        {/* <Route path="courses/:courseId" element={<CourseDetails />} /> */}
+        <Route path="courses/:courseId" element={<CourseDetails />} />
         {/* <Route path="catalog/:catalogName" element={<Catalog />} /> */}
 
 

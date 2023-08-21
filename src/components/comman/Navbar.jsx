@@ -3,7 +3,7 @@ import { Link, matchPath, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo/logo-no-background.png";
 import { NavbarLinks } from "../../data/navbar-links";
 import { useSelector } from "react-redux";
-import {AiOutlineShoppingCart}  from "react-icons/ai"
+import {AiOutlineShoppingCart,AiOutlineMenu}  from "react-icons/ai"
 import {MdKeyboardArrowDown}  from "react-icons/md"
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
 import { ACCOUNT_TYPE } from "../../utils/constants";
@@ -52,7 +52,11 @@ export default function Navbar() {
   // console.log("sublink",subLinks.length);
 
   return (
-    <div className=" flex h-14  items-center justify-center  border-b-[1px] border-b-richblack-700">
+    <div className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700
+     ${
+      location.pathname !== "/" ? "bg-richblack-800" : ""
+    } transition-all duration-200`}>
+
       <div className="flex w-11/12 max-w-maxContent  items-center justify-between">
         {/* logo  */}
         <Link to={"/"}>
@@ -60,7 +64,8 @@ export default function Navbar() {
         </Link>
 
         {/* navlikks */}
-        <nav>
+        {/* <nav className="hidden md:block"> */}
+        <nav className="">
           <ul className="flex gap-x-6 text-richblack-50">
             {NavbarLinks.map((link, index) => (
               <li key={index}>
@@ -68,7 +73,10 @@ export default function Navbar() {
                   // spacial tritmaent for catlog
 
                   link.title === "Catalog" ? (
-                    <div className=" relative flex items-center gap-1 group hover:text-yellow-25 cursor-pointer transition-all  duration-200">
+                    <div className={`group relative flex cursor-pointer items-center gap-1 ${
+                        matchRoute("/catalog/:catalogName")
+                          ? "text-yellow-25"
+                          : "text-richblack-25"}`}>
                     <p>{link.title}</p>
                     <MdKeyboardArrowDown/>
 
@@ -76,7 +84,7 @@ export default function Navbar() {
                     <div className=" 
                     invisible opacity-0 absolute flex flex-col bg-richblack-5 text-richblack-900 
                     group-hover:opacity-100  group-hover:visible
-                    top-[50%] left-[50%] translate-x-[-50%] mt-5  rounded-md  p-4 lg:w-[300px] transition-all duration-200 z-10">
+                    top-[50%] left-[50%] translate-x-[-50%] mt-5  rounded-md  p-4 lg:w-[300px] transition-all duration-200  z-50">
                      {/* tringle */}
                      <div className="absolute left-[50%] top-0
                                 translate-x-[80%]
@@ -137,16 +145,17 @@ export default function Navbar() {
 
         {/* signup / login / profile dropdown and cart */}
 
-        <div className=" flex gap-x-4 items-center">
+        <div className="hidden items-center gap-x-4 md:flex">
  
 
           
         {   //cart
           user && user?.accountType!= ACCOUNT_TYPE.INSTRUCTOR && (
             <Link to={"dashboard/cart"} className=" relative">
-            <AiOutlineShoppingCart/>
+            <AiOutlineShoppingCart className="text-2xl text-richblack-300"/>
             {totalItems>0 &&(
-              <span className=" absolute">
+              <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
+
                 {totalItems}
               </span>
             )}
@@ -189,6 +198,9 @@ export default function Navbar() {
         }
 
         </div>
+        <button className="mr-4 md:hidden">
+          <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
+        </button>
 
 
 

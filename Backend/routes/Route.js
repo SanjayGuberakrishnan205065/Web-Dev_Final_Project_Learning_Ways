@@ -7,7 +7,7 @@ const router = express.Router();
 const {sendOTP,signUp,login} =require("../controllers/Auth");
 const {createCategory, getAllCategory,categoryPageDetails}=require("../controllers/Category");
 const {contactUs}=require("../controllers/ContactUs");
-const {createCourse,getAllCourse,getFullCourseDetails, UpdateCourse, deleteCourse, getInstructorCourses, dummy}=require("../controllers/Course");
+const {createCourse,getAllCourse,getFullCourseDetails, UpdateCourse, deleteCourse, getInstructorCourses, dummy, getCourseDetails}=require("../controllers/Course");
 const {capturePayment,verifySignature, verifyPayment, sendPaymentSuccessEmail}=require("../controllers/Payments");
 const {updateProfile,deleteAccount,getAllUser, getEnrolledCourses, updateDisplayPicture, changePassword}=require("../controllers/Profile");
 const {createRating,averageRating,courseRating,getAllReating}=require("../controllers/Rating");
@@ -83,7 +83,10 @@ router.post("/course/updateCourse", auth, isInstructor, UpdateCourse);
 // Get all course 
 router.get("/course/getAllCourses",getAllCourse);
 
-// Get detail of perticularr course 
+// get course details for un logged user 
+router.post("/course/getCourseDetails",getCourseDetails)
+
+// Get details of perticularr course  fot authenticate user 
 router.post("/course/getFullCourseDetails",auth,getFullCourseDetails);
 
 //Get Instructor Courses 

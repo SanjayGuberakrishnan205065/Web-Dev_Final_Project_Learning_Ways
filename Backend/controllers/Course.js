@@ -10,7 +10,21 @@ const SubSection = require("../models/SubSection");
 const CourseProgress  = require('../models/CourseProgress')
 const Catagory = require('../models/Category')
 const {mongoose } = require("mongoose");
+// const {convertSecondsToDuration} = require("../utils/testing")
 
+function convertSecondsToDuration(totalSeconds) {
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = Math.floor((totalSeconds % 3600) % 60)
+
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`
+  } else if (minutes > 0) {
+    return `${minutes}m ${seconds}s`
+  } else {
+    return `${seconds}s`
+  }
+}
 
 
 //create the new courses 
@@ -298,8 +312,72 @@ exports.getAllCourse = async (req, res)=>
     }
 
 }
- 
-//get single course details 
+
+
+// get full course for with out logged user 
+exports.getCourseDetails = async (req, res) => {
+  try {
+    const { courseId } = req.body
+    const courseDetails = await Course.findOne({
+      _id: courseId,
+    })
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionalDetails",
+        },
+      })
+      .populate("category")
+      .populate("ratingAndReview")
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+          select: "-videoUrl",
+        },
+      })
+      .exec()
+
+    if (!courseDetails) {
+      return res.status(400).json({
+        success: false,
+        message: `Could not find course with id: ${courseId}`,
+      })
+    }
+
+    // if (courseDetails.status === "Draft") {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message: `Accessing a draft course is forbidden`,
+    //   });
+    // }
+
+    let totalDurationInSeconds = 0
+    courseDetails.courseContent.forEach((content) => {
+      content.subSection.forEach((subSection) => {
+        const timeDurationInSeconds = parseInt(subSection.timeDuration)
+        totalDurationInSeconds += timeDurationInSeconds
+      })
+    })
+
+    const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        courseDetails,
+        totalDuration,
+      },
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
+}
+
+//get single course details for authenticate user 
 exports.getFullCourseDetails = async (req, res) => {
 /*    Required steps to get course 
    1. Fetch id from body 
@@ -382,6 +460,7 @@ exports.getFullCourseDetails = async (req, res) => {
         });
     }
 }
+
 
 
 // only instructor courses
@@ -470,4 +549,5 @@ exports.getInstructorCourses = async (req, res) => {
   }
   
 
-
+  
+  

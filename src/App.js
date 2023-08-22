@@ -28,6 +28,8 @@ import MyCourses from "./components/core/DashboardPage/MyCourses";
 import EditCourse from "./components/core/DashboardPage/EditCourse";
 import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
+import ViewCourse from "./slices/viewCourse";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 function App() {
 
   
@@ -102,38 +104,53 @@ function App() {
           </PrivateRoute>
         }>
 
-        {/* route for all user  */}
-        <Route path="dashboard/my-profile" element={<MyProfile/>}/>
-        <Route path="dashboard/settings" element={<Settings/>}/>
+                  {/* route for all user  */}
+                  <Route path="dashboard/my-profile" element={<MyProfile/>}/>
+                  <Route path="dashboard/settings" element={<Settings/>}/>
 
-       
-       {
-       user?.accountType === ACCOUNT_TYPE.STUDENT && (
-        <>
-         {/* route for only student  */}
-        <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
-        <Route path="dashboard/cart" element={<Cart/>}/>
+                
+                {
+                user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                  <>
+                  {/* route for only student  */}
+                  <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
+                  <Route path="dashboard/cart" element={<Cart/>}/>
 
-        </>
-       )
-       }
-       
-       {
-       user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
-        <>
-         {/* route for only student  */}
-        <Route path="dashboard/add-course" element={<AddCourse/>}/>
-        <Route path="dashboard/my-courses" element={<MyCourses/>}/>
-        <Route path="dashboard/edit-course/:courseId" element={<EditCourse/>}/>
-        
-        </>
-       )
-       }
-
-       
+                  </>
+                )
+                }
+                
+                {
+                user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+                  <>
+                  {/* route for only student  */}
+                  <Route path="dashboard/add-course" element={<AddCourse/>}/>
+                  <Route path="dashboard/my-courses" element={<MyCourses/>}/>
+                  <Route path="dashboard/edit-course/:courseId" element={<EditCourse/>}/>
+                  
+                  </>
+                )
+                }
 
         </Route>
 
+       <Route
+       element={
+        <PrivateRoute>
+          <ViewCourse/>
+        </PrivateRoute>
+       }
+       >
+       {user?.accountType===ACCOUNT_TYPE.STUDENT &&(
+        <>
+          <Route 
+          path="view-coures/:courseId/section/:sectionId/sub-section/:subSectionId" 
+            element={<VideoDetails/>}
+          />
+        </>
+       )}
+      
+       </Route>
 
         <Route path="*" element={<Error/>}/>
     </Routes>

@@ -24,7 +24,12 @@ const EnrolledCourses = () => {
 
   useEffect(() => {
     getEnrolledCourses();
-  }, []);
+  },[]);
+
+
+
+  // http://localhost:3000/view-course/64df462254b82c77332a84f3/section/64df463854b82c77332a84f7/sub-section/64df465f54b82c77332a84fb
+  console.log("enroll data ", enrolledCourses);
 
   return (
     <div className="text-white">
@@ -74,7 +79,7 @@ const EnrolledCourses = () => {
               </div>
 
               {/* <div className="w-1/4 px-2 py-3">   {course?.duration}</div> */}
-              <div className="w-1/4 px-2 py-3"> 2:30hr </div>
+              <div className="w-1/4 px-2 py-3"> {course.totalDuration} </div>
 
               <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
                 <p>Progress: {course.progressPercentage || 0}%</p>

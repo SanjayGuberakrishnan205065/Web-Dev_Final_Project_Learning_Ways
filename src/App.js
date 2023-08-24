@@ -28,8 +28,8 @@ import MyCourses from "./components/core/DashboardPage/MyCourses";
 import EditCourse from "./components/core/DashboardPage/EditCourse";
 import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
-import ViewCourse from "./slices/viewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
+import ViewPage from "./pages/ViewPage";
 function App() {
 
   
@@ -134,17 +134,18 @@ function App() {
 
         </Route>
 
+
        <Route
        element={
         <PrivateRoute>
-          <ViewCourse/>
+          <ViewPage/>
         </PrivateRoute>
        }
        >
        {user?.accountType===ACCOUNT_TYPE.STUDENT &&(
         <>
           <Route 
-          path="view-coures/:courseId/section/:sectionId/sub-section/:subSectionId" 
+            path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" 
             element={<VideoDetails/>}
           />
         </>

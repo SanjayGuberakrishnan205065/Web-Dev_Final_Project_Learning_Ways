@@ -4,7 +4,8 @@ const Course = require("../models/Course");
 const { instance } = require("../config/razorpay");
 const {mailSender} = require("../utils/mailSender");
 const mongoose = require("mongoose");
-const crypto = require("crypto")
+const crypto = require("crypto");
+const CourseProgress = require("../models/CourseProgress");
 
 
 // Capture Payment 
@@ -133,22 +134,35 @@ const enrollStudent = async (courses, userId, res)=>{
       {new:true}
       )
 
+
       if(!enrolledCourse){
 
-            return res.status(404).json({success:false, message:"Pcourse not founnd"})
+            return res.status(404).json({success:false, message:"Course not founnd"})
 
       }
+        // add this booth enrolled student and course in course progress 
+      // to create course pronress 
+     const courseProgress= await CourseProgress.create({
+        courseId:enrolledCourse._id, 
+        userId:userId,
+        completedVideos:[]})
 
       // update Student 
 
       const enrolledStudent = await User.findByIdAndUpdate(
         {_id:userId},
-        {$push:{courses:course_id}},
+        {$push:{
+          courses:course_id,
+       courseProgress:courseProgress._id}},
+       
         {new:true}
       )
 
+    
+
       // send mail to student 
 
+      
       const mailResponce = await mailSender(enrolledStudent.email, "Enrolled in course ",`You are enrolled in Learning Ways course :${enrolledCourse.courseName}`);
       console.log("Email sent Successfully",mailResponce)
       

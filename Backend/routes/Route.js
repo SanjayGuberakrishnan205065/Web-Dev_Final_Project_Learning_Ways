@@ -14,6 +14,7 @@ const {createRating,averageRating,courseRating,getAllReating}=require("../contro
 const {resetPasswordToken,resetPassword}=require("../controllers/ResetPassword");
 const {createSection,UpdateSection,deleteSection}=require("../controllers/Section");
 const {createSubSection,updateSubSection,deleteSubSection}=require("../controllers/SubSection");
+const { updataeCourseProgress } = require("../controllers/CoursePrgress");
 const {testing} =require("../utils/testing");
 
 
@@ -94,6 +95,9 @@ router.get("/course/getInstructorCourses",auth,isInstructor,getInstructorCourses
 
 // delete course 
 router.delete("/course/deleteCourse",deleteCourse);
+
+// To update coure Progress 
+router.post("/course/updateCourseProgress",auth, isStudent, updataeCourseProgress)
 
 
 //********************************************************************************************************************

@@ -4,7 +4,10 @@ const Profile = require("../models/Profile");
 const User = require("../models/User");
 const {imageUploader} = require("../utils/imageUploader");
 const { response } = require("express");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const { populate } = require("../models/Course");
+const { convertSecondsToDuration } = require("../utils/secTduration");
+const CourseProgress = require("../models/CourseProgress");
 
 
 
@@ -162,17 +165,131 @@ exports.getAllUser = async (req,res)=>{
 exports.getEnrolledCourses = async (req, res) => {
   try {
     const userId = req.user.id
-    const userDetails = await User.findOne({
+    let userDetails = await User.findOne({
       _id: userId,
     })
-      .populate("courses")
+      .populate({
+        path:"courses",
+        populate:{
+          path:"courseContent",
+          populate:{
+            path:"subSection"
+
+          },
+        },
+
+      })
       .exec()
+
     if (!userDetails) {
       return res.status(400).json({
         success: false,
         message: `Could not find user with id: ${userDetails}`,
       })
     }
+
+
+    // calculating the course progress 
+
+    // userDetails =  userDetails.toObject()
+    // var subsectionLength = 0;
+
+    // // for all course present in user 
+
+    // for (var i= 0; i<userDetails.courses.length; i++)
+    // {
+    //   let totalDurationInSecond = 0;
+    //   subsectionLength=0;
+
+    //   // for perticular coourse in each section and subsection 
+    //   for(var j = 0; j<userDetails.courses[i].courseContent.length;j++)
+    //   {
+    //     // calculate the duration of all subsection 
+
+    //     totalDurationInSecond += userDetails.courses[i].courseContent[j].subSection.reduce((acc,curr)=> acc + parseInt(curr.duration),0)
+
+    //     userDetails.courses[i].totalDuration = convertSecondsToDuration(totalDurationInSecond)
+        
+    //     subsectionLength += userDetails.courses[i].courseContent[j].subSection.length
+    //   }
+
+    //   // fetch the no of lecture completed 
+    //   let courseProgressCount = await CourseProgress.findOne({
+    //     courseId:userDetails.courses[i]._id,
+    //     userId:userId,
+
+    //   })
+
+    //   if(subsectionLength ===0)
+    //   {
+    //     userDetails.courses[i].progressPercentage=100;
+    //   }
+    //   else{
+    //     // to make up to 2 decimal point
+    //     const multiplier = Math.pow(10, 2)
+    //     userDetails.courses[i].progressPercentage=
+    //     Math.round(
+    //       (courseProgressCount/subsectionLength)*100*multiplier
+    //     )
+
+    //   }
+
+
+
+    // }
+
+    userDetails = userDetails.toObject()
+    var SubsectionLength = 0
+    for (var i = 0; i < userDetails.courses.length; i++) {
+
+      let totalDurationInSeconds = 0
+      SubsectionLength = 0
+
+      for (var j = 0; j < userDetails.courses[i].courseContent.length; j++) {
+        totalDurationInSeconds += userDetails.courses[i].courseContent[
+          j
+        ].subSection.reduce((acc, curr) => acc + parseInt(curr.duration), 0)
+
+        userDetails.courses[i].totalDuration = convertSecondsToDuration(
+          totalDurationInSeconds
+        )
+
+        SubsectionLength +=
+          userDetails.courses[i].courseContent[j].subSection.length
+      }
+      
+      // let courseProgressCount = await CourseProgress.findOne({
+      //   courseID: userDetails.courses[i]._id,
+      //   userId: userId,
+      // })
+
+      let courseProgressCount = await CourseProgress.findOne({
+            courseId:userDetails.courses[i]._id,
+            userId:userId,
+    
+          })
+      console.log("coursePC",courseProgressCount)
+
+      courseProgressCount = courseProgressCount?.completedVideos.length
+      // courseProgressCount = 1
+      
+      console.log("courseProgressCount",courseProgressCount)
+      console.log("SubsectionLength",SubsectionLength)
+      if (SubsectionLength === 0) {
+        userDetails.courses[i].progressPercentage = 100
+      } else {
+        // To make it up to 2 decimal point
+        const multiplier = Math.pow(10, 2)
+        userDetails.courses[i].progressPercentage =
+          Math.round(
+            (courseProgressCount / SubsectionLength) * 100 * multiplier
+          ) / multiplier
+
+         
+      }
+    }
+
+
     return res.status(200).json({
       success: true,
       data: userDetails.courses,

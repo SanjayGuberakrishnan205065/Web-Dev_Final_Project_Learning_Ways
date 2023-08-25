@@ -14,7 +14,8 @@ export const authEndpoints = {
 export const profileEndpoints = {
   CONTACT_US_API: BASE_URL + "/profile/contactUs",
   GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
-  GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses"
+  GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses",
+  GET_INSTRUCTOR_STATISTICS_API:BASE_URL+"/profile/instructorDashboard"
 
 };
 
@@ -65,4 +66,7 @@ export const  studentEndpoint = {
   COURSE_PAYMENT_API:BASE_URL + "/payment/capturePayment",
   COURSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
   SEND_PAYMENT_SUCCESS_EMAIL_API:+ "/payment/sendPaymentSuccessMail",
+}
+export const reviewEndpoint = {
+  ALL_REVIEW_API:BASE_URL + "/course/getAllReviews"
 }

@@ -11,7 +11,7 @@ import "swiper/css/pagination"
 import 'swiper/css/navigation';
 // import "../../.."
 // Import required modules
-import { FreeMode,Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
+import { FreeMode,Navigation, Pagination, Mousewheel, Keyboard ,Autoplay} from 'swiper/modules';
 
 // import { getAllCourses } from "../../services/operations/courseDetailsAPI"
 import Course_Card from "./Course_Card"
@@ -21,21 +21,32 @@ function Course_Slider({ Courses }) {
     <>
       {Courses?.length ? (
         <Swiper
-        
-          slidesPerView={1}
-          spaceBetween={25}
-          loop={true}
-          autoplay={{
-                    delay:1,
-                    disableOnInteraction: false
-                }}
-          modules={[FreeMode, Pagination]}
+
           breakpoints={{
             1024: {
               slidesPerView: 3,
             },
+            600:{
+
+                slidesPerView:2
+            }
             
           }}
+        spaceBetween={25}
+        loop={true}
+        freeMode={true}
+        autoplay={
+            {
+                delay:2500,
+                disableOnInteraction:false
+            }
+        }
+
+          modules={[FreeMode, Pagination, Autoplay]}
+        
+        
+          
+          // }}
           className="max-h-[30rem]"
         >
           {Courses?.map((course, i) => (

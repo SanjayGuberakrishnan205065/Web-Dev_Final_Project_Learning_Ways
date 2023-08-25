@@ -19,9 +19,9 @@ export default function ExploreMore() {
     const [currentCard, setCurrentCard] = useState(HomePageExplore[0].courses[0].heading);
 
 
-    console.log(currentTab)
-    console.log(course)
-    console.log(currentCard)
+    // console.log(currentTab)
+    // console.log(course)
+    // console.log(currentCard)
 
     const setMyCard = (value)=>{
 

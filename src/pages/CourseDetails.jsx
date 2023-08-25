@@ -238,11 +238,14 @@ export default function CourseDetails() {
 
           {/* course card  */}
           <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] translate-y-24 md:translate-y-0 lg:absolute  lg:block">
+           
+           { user.accountType===ACCOUNT_TYPE.STUDENT &&(
             <CourseDetailsCard
               course={courseData?.data?.courseDetails}
               setConfirmationModal={setConfirmationModal}
               handleBuyCourse={handleBuyCourse}
-            />
+            />)
+           }
           </div>
         </div>
       </div>
@@ -325,33 +328,5 @@ export default function CourseDetails() {
     </>
   );
 }
-{
-  /* <div>
-      <p> {courseName}</p>
-      <p>{courseDescription}</p>
 
-      <div>
-        <span>{avgRatingCount}</span>
-        <RatingStars Review_Count={avgRatingCount} Star_Size={24} />
-        <span> {`${ratingAndReview.length} reviews`}</span>
-        <span> {`${studentEnrolled.length} students`}</span>
-      </div>
-
-      <div>
-        <p>Created By : {`${instructor.firstName} ${instructor.lastName}`}</p>
-      </div>
-      <div>
-        <p>Created At : {formatDate(createdAt)}</p>
-        <p>English</p>
-      </div>
-      <div>
-        <CourseDetailsCard
-          course={courseData?.data?.courseDetails}
-          setConfirmationModal={setConfirmationModal}
-          handleBuyCourse={handleBuyCourse}
-        />
-      </div>
-
-      {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
-    </div> */
-}
+  

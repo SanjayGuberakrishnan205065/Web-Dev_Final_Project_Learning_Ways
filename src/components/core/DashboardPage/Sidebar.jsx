@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { sidebarLinks } from "../../../data/dashboard-links";
 import { logout } from "../../../services/operations/authAPI";
 import { useDispatch, useSelector } from "react-redux";
-import SidebarLink from "../../core/DashboardPage/SidebarLink";
+import SidebarLink from "./SidebarLink";
 import { useLocation, useNavigate } from "react-router-dom";
 import { VscSignOut } from "react-icons/vsc";
 import ConfirmationModal from "../../comman/ConfirmationModal";
@@ -31,8 +31,9 @@ export default function Sidebar() {
     <div>
       {/* sidebar top 3 link  */}
 
-      <div className="flex h-[calc(100vh-3.5rem)] min-w-[220px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10">
+      <div className="flex h-[calc(100vh-3.5rem)] min-w-[220px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-9">
         <div className=" flex flex-col ">
+
           {sidebarLinks.map((link) => {
             // checking to which dashbord will be render student of instructor
             if (link.type && user.accountType !== link.type) return null;
@@ -49,7 +50,7 @@ export default function Sidebar() {
           {/* setting */}
           <SidebarLink
             link={{ name: "Setting", path: "dashboard/settings" }}
-            iconName={"VscSettingGear"}
+            iconName={"VscSettingsGear"}
           /> 
 
           {/* logout */}

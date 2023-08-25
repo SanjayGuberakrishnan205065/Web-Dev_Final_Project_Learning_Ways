@@ -9,7 +9,7 @@ const {createCategory, getAllCategory,categoryPageDetails}=require("../controlle
 const {contactUs}=require("../controllers/ContactUs");
 const {createCourse,getAllCourse,getFullCourseDetails, UpdateCourse, deleteCourse, getInstructorCourses, dummy, getCourseDetails}=require("../controllers/Course");
 const {capturePayment,verifySignature, verifyPayment, sendPaymentSuccessEmail}=require("../controllers/Payments");
-const {updateProfile,deleteAccount,getAllUser, getEnrolledCourses, updateDisplayPicture, changePassword}=require("../controllers/Profile");
+const {updateProfile,deleteAccount,getAllUser, getEnrolledCourses, updateDisplayPicture, changePassword, instructorDashboard}=require("../controllers/Profile");
 const {createRating,averageRating,courseRating,getAllReating}=require("../controllers/Rating");
 const {resetPasswordToken,resetPassword}=require("../controllers/ResetPassword");
 const {createSection,UpdateSection,deleteSection}=require("../controllers/Section");
@@ -156,7 +156,7 @@ router.post("/course/createRating", auth, isStudent, createRating)
 router.get("/course/getAverageRating", averageRating)
 
 // Get all reviews 
-router.get("/course/getReviews", getAllReating)
+router.get("/course/getAllReviews", getAllReating)
 
 //Get reating for perticular course 
 router.get("/course/getCourseRating",courseRating)
@@ -184,6 +184,9 @@ router.put("/profile/updatedProfilePicture", auth,updateDisplayPicture)
 
 // Change password 
 router.put("/profile/changePassword", auth,changePassword)
+
+//instructor Statistics 
+router.get("/profile/instructorDashboard",auth,isInstructor,instructorDashboard)
 
 
 //Contact Us 

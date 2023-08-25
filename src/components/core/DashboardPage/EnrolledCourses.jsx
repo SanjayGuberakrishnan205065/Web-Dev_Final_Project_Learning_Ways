@@ -12,10 +12,10 @@ const EnrolledCourses = () => {
 
   const getEnrolledCourses = async () => {
     try {
-      console.log("before calling");
+      // console.log("before calling");
       const response = await getUserEnrolledCourses(token);
-      console.log("after calling");
-      console.log(response);
+      // console.log("after calling");
+      // console.log(response);
       setEnrolledCourses(response);
     } catch (error) {
       console.log("Unable to Fetch Enrolled Courses");
@@ -29,7 +29,7 @@ const EnrolledCourses = () => {
 
 
   // http://localhost:3000/view-course/64df462254b82c77332a84f3/section/64df463854b82c77332a84f7/sub-section/64df465f54b82c77332a84fb
-  console.log("enroll data ", enrolledCourses);
+  // console.log("enroll data ", enrolledCourses);
 
   return (
     <div className="text-white">

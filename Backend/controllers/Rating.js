@@ -51,7 +51,13 @@ exports.createRating =async (req,res)=>{
 
         // 4.  Check for user already reate for this course 
         const alreadyReviewed = await Rating.findOne({user:userId, course:courseId});
-        
+
+         if (alreadyReviewed) {
+      return res.status(403).json({
+        success: false,
+        message: "Course already reviewed by user",
+      })
+    }
         // 5. Create the entry in Data base 
         const ratingData = await Rating.create({
             rating,
@@ -60,14 +66,17 @@ exports.createRating =async (req,res)=>{
             course:courseId});
 
         //6. Update the Course schema with ratinh and review section 
-        const updatedCourse = await Course.findByIdAndUpdate({_id:courseId},{
-            rataingAndReview:ratingData._id,
+         await Course.findByIdAndUpdate(courseId,{
+            $push:{ratingAndReview:ratingData._id},
         },{new:true});
+
+        await courseDetails.save()
 
         //7. Send response 
         res.status(200).json({
             success:true,
             message:"Reating and Review Created successfully",
+            ratingData
         })
         
     } catch (error) {
@@ -232,18 +241,18 @@ exports.getAllReating = async (req,res)=>{
                                         .sort({reating:"desc"})
                                         .populate({
                                             path:"user",
-                                            select:"firstName, lastName, email, image",
+                                            select:"firstName lastName email image",
                                         })
                                         .populate({
                                             path:"course",
-                                            select:"coueseName",
-                                        })
+                                            select:"courseName",
+                                        }).exec()
                 
   
             return res.status(200).json({
                 success:true,
                 message:"Fetched all reatings ",
-                allReating:allReating
+                data:allReating
 
             })
         
@@ -251,12 +260,13 @@ exports.getAllReating = async (req,res)=>{
         // 3. Return responce
         
     } catch (error) {
+        console.log("")
         return res.status(404).json({
             success:false,
             message:"Failed to fetched all reatings"
 
         })
-        
+         
     }
 
 }

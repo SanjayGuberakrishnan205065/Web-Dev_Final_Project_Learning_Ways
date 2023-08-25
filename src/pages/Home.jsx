@@ -10,7 +10,7 @@ import TimelineSection from "../components/core/HomePage/TimelineSection";
 import LearninglanguageSection from "../components/core/HomePage/LearninglanguageSection";
 import InstructorSection from "../components/core/HomePage/InstructorSection";
 import ExploreMore from "../components/core/HomePage/ExploreMore";
-
+import ReviewSlider from "../components/comman/ReviewSlider";
 export default function Home() {
   return (
     <div>
@@ -203,11 +203,12 @@ export default function Home() {
       </div>
 
      {/* section 3 */}
-     <div className=" w-11/12 flex flex-col  mx-auto items-center justify-between 
-     gap-8 bg-richblack-900 text-pure-greys-5 ">
+     <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
 
       <InstructorSection></InstructorSection>
       <h2 className=" text-center lg:text-4xl  text-2xl font-semibold mt-10  "> Review Form Other Learners </h2>
+
+         <ReviewSlider/>
 
      </div>
 

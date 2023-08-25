@@ -2,6 +2,7 @@ import React from 'react'
 import ContactForm from '../components/core/ContactPage/ContactForm'
 import Footer from '../components/comman/Footer'
 import ContactDetails from '../components/core/ContactPage/contactDetails'
+import ReviewSlider from '../components/comman/ReviewSlider'
 
 export default function Contact() {
   return (
@@ -28,7 +29,7 @@ export default function Contact() {
         <h1 className="text-center text-4xl font-semibold mt-8">
           Reviews from other learners
         </h1>
-        {/* <ReviewSlider /> */}
+        <ReviewSlider />
       </div>
 
      <Footer/>

@@ -8,11 +8,13 @@ import RatingStars from '../../comman/RatingStars'
 export default function Course_Card({course, Height}) {
 
     const [avgReviewCount , setAvgReviewCount]= useState(0)
+
     useEffect(()=>{
-        const count = GetAvgRating(course. ratingAndReview)
+        const count = GetAvgRating(course.ratingAndReview)
         setAvgReviewCount(count)
     },[course])
 
+   
   return (
     <div>
         <Link to={`/courses/${course._id}`}>

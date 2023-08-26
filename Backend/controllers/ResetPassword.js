@@ -2,6 +2,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt")
 const { mailSender } = require("../utils/mailSender");
+const {resetPassword} = require("../MailFormat/resetPassword")
 require("dotenv").config();
 
 exports.resetPasswordToken = async (req, res) => {
@@ -47,8 +48,9 @@ exports.resetPasswordToken = async (req, res) => {
     // send mail with link
     await mailSender(
       email,
-      "Password Reset Link",
-      `Password Reset Link : ${url}`
+      "Reset Your Password",
+      resetPassword(email,url)
+      
     );
 
     // return response

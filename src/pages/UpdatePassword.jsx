@@ -38,17 +38,21 @@ export default function UpdatePassword() {
   };
 
   return (
-    <div>
+    <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+
       {loading ? (
-        <div>Loading....</div>
+        <div className="spinner"></div>
       ) : (
-        <div>
-          <h1>Choose new password</h1>
-          <p>Almost done. Enter your new password and youre all set.</p>
+        <div className="max-w-[500px] p-4 lg:p-8">
+        <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-100">
+Choose new password</h1>
+<p className="my-4 text-[1.125rem] leading-[1.625rem] text-richblack-100">
+Almost done. Enter your new password and youre all set.</p>
 
           <form onSubmit={handleOnSubmit}>
             <label className=" relative">
-              <p>New password *</p>
+            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-100">
+New password <sup className="text-pink-200">*</sup></p>
               <input
                 required
                 name="password"
@@ -56,21 +60,26 @@ export default function UpdatePassword() {
                 placeholder="Enter Password"
                 type={showPassword ? "text" : "password"}
                 onChange={handleOnChange}
+                className="form-style w-full !pr-10"
+
               />
 
               <span
-                className=" absolute"
+              
                 onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+
               >
                 {!showPassword ? (
-                  <AiOutlineEye fontSize={24} />
+                  <AiOutlineEye fontSize={24} fill="#AFB2BF"/>
                 ) : (
-                  <AiOutlineEyeInvisible fontSize={24} />
+                  <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF"/>
                 )}
               </span>
             </label>
-            <label>
-              <p>Confirm new password*</p>
+            <labe className="relative mt-3 block">
+            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-100">
+             Confirm new password<sup className="text-pink-200">*</sup></p>
               <input
                 required
                 name="confirmPassword"
@@ -78,28 +87,33 @@ export default function UpdatePassword() {
                 placeholder="Confirm Password"
                 type={showConfirmPassword ? "text" : "password"}
                 onChange={handleOnChange}
+                className="form-style w-full !pr-10"
               />
 
               <span
-                className=" absolute"
+             className="absolute right-3 top-[38px] z-[10] cursor-pointer"
                 onClick={() => setShowConfirmPassword((prev) => !prev)}
               >
-                {!showPassword ? (
-                  <AiOutlineEye fontSize={24} />
+                {!showConfirmPassword ? (
+                  <AiOutlineEye fontSize={24} fill="#AFB2BF" />
                 ) : (
-                  <AiOutlineEyeInvisible fontSize={24} />
+                  <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
                 )}
               </span>
-            </label>
+            </labe>
 
-            <div>abcd</div>
+          
 
-            <button type="submit">Reset Password</button>
+            <button type="submit"
+                          className="mt-6 w-full rounded-[8px] bg-yellow-200 py-[12px] px-[12px] font-medium text-richblack-900"
+>Reset Password</button>
           </form>
 
-          <div>
+          <div className="mt-6 flex items-center justify-between">
+
             <Link to={"/login"}>
-              <p> Back to Login</p>
+            <p className="flex items-center gap-x-2 text-richblack-100">
+ Back to Login</p>
             </Link>
           </div>
         </div>

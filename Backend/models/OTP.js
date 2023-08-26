@@ -1,6 +1,7 @@
 // import
 const mongoose = require("mongoose");
 const { mailSender } = require("../utils/mailSender");
+const otpTemplate = require("../MailFormat/emailVarification");
 
 const OTPSchema = new mongoose.Schema({
   
@@ -25,7 +26,8 @@ createdAt: {
 async function sendMailToVarification(email,otp)
 {
     try {
-        const mailResponce = await mailSender(email, "Varification Email From Learning Ways",`The one time password is :${otp}`);
+        const mailResponce = await mailSender(email, "Varification Email",
+        otpTemplate(otp));
         console.log("Email sent Successfully",mailResponce)
         
     } catch (error) {

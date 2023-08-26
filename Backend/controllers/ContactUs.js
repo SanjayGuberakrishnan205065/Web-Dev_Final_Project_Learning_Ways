@@ -1,4 +1,5 @@
- const {mailSender}  = require("../utils/mailSender");
+ const { contactUsEmail } = require("../MailFormat/contactFormRes");
+const {mailSender}  = require("../utils/mailSender");
 
 
 
@@ -33,8 +34,8 @@ exports.contactUs = async (req, res) =>
 
 
         // 4. Send mail to student as a receive your query 
-        await mailSender(email,"For mail received ",
-                         "Your query mail receiveded on learning ways portal" )
+        await mailSender(email,"Your Data send successfully",
+                         contactUsEmail(email,firstName,lastName,message,contact,"+91") )
         // 5. Send response 
         res.status(200).json(
             {

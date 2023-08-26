@@ -9,6 +9,8 @@ const { populate } = require("../models/Course");
 const { convertSecondsToDuration } = require("../utils/secTduration");
 const CourseProgress = require("../models/CourseProgress");
 const Course = require("../models/Course");
+const { passwordUpdated } = require("../MailFormat/passwordUptate");
+const { mailSender } = require("../utils/mailSender");
 
 
 
@@ -239,6 +241,28 @@ exports.changePassword = async (req, res)=>
 
      const updatedUser = await User.findByIdAndUpdate({_id:userId},
       {password:hashedPassword},{new:true})
+
+
+      // Send notification email
+    try {
+      const emailResponse = await mailSender(
+        updatedUser.email,
+        "Password for your account has been updated",
+       passwordUpdated(
+        updatedUser.email,
+        `Password updated successfully for ${updatedUser.firstName} ${updatedUser.lastName}`
+       )
+      )
+      console.log("Email sent successfully:", emailResponse.response)
+    } catch (error) {
+      // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
+      console.error("Error occurred while sending email:", error)
+      return res.status(500).json({
+        success: false,
+        message: "Error occurred while sending email",
+        error: error.message,
+      })
+    }
 
 
       res.status(200).json({

@@ -36,7 +36,7 @@ export function sendOtp(email, navigate) {
       navigate("/verify-email")
     } catch (error) {
       console.log("SENDOTP API ERROR............", error)
-      toast.error("Could Not Send OTP")
+      toast.error(error.response.data.message)
     }
     dispatch(setLoading(false))
     toast.dismiss(toastId)
@@ -133,7 +133,7 @@ export function login(email, password, navigate) {
       console.log("LOGIN API ERROR............", error)
       console.error(error);
 
-      toast.error("Login Failed")
+      toast.error(error.response.data.message)
     }
     dispatch(setLoading(false))
     toast.dismiss(toastId)
@@ -199,7 +199,7 @@ export function resetPassword (password, confirmPassword, token )
     } catch (error) {
       
       console.log("RESET PASSWORD ERROR .........",error);
-      toast.error("Unable to reset password")
+      toast.error(error.response.data.message)
 
       
     }

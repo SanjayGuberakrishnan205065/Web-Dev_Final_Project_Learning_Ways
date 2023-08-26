@@ -6,6 +6,7 @@ const {mailSender} = require("../utils/mailSender");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const CourseProgress = require("../models/CourseProgress");
+const { courseEnrollmentEmail } = require("../MailFormat/courseEnrollmentMail");
 
 
 // Capture Payment 
@@ -163,7 +164,11 @@ const enrollStudent = async (courses, userId, res)=>{
       // send mail to student 
 
       
-      const mailResponce = await mailSender(enrolledStudent.email, "Enrolled in course ",`You are enrolled in Learning Ways course :${enrolledCourse.courseName}`);
+      const mailResponce = await mailSender(enrolledStudent.email,`Successfully Enrolled into ${enrolledCourse.courseName}`,
+      courseEnrollmentEmail(
+        enrolledCourse.courseName,
+        `${enrolledStudent.firstName} ${enrolledStudent.lastName}`
+      ));
       console.log("Email sent Successfully",mailResponce)
       
     } catch (error) {

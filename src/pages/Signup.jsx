@@ -1,6 +1,6 @@
 import React from 'react'
 
-import signupImg from "../assets/Images/signup.webp"
+import signupImg from "../assets/Images/signup.jpg"
 
 import Template from "../components/core/Auth/Template"
 
@@ -12,9 +12,9 @@ export default function Signup() {
     
    
     <Template
-    title="Join the millions learning to code with StudyNotion for free"
-    description1="Build skills for today, tomorrow, and beyond."
-    description2="Education to future-proof your career."
+    title="Get Learning Ways for free and join the millions of people who are learning to code."
+    description1="Develop talents that will be useful in the future."
+    description2="Invest in education to secure your career."
     image={signupImg}
     formType="signup"
   />

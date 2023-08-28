@@ -71,7 +71,7 @@ export default function Catalog() {
   return (
    <>
 
-<div className="  flex flex-col  ">
+<div className="  flex flex-col pt-10  ">
        {/* Hero section  */}
       <div className=" box-content bg-richblack-800 px-4">
         <div className="mx-auto flex  w-11/12 min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent ">
@@ -127,7 +127,7 @@ export default function Catalog() {
         {/* section2 */}
         <div className=" mx-auto box-content w-full max-w-maxContentTab  py-12 lg:max-w-maxContent">
         <div className="section_heading">
-            Top Courses in {catalogPageData?.data?.selectedCategory?.name}
+            Top Courses 
           </div>
 
           <div className=" py-8">

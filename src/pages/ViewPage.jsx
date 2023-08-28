@@ -47,7 +47,7 @@ export default function ViewPage() {
 
   return (
   <>
-            <div className=" flex min-h-[calc(100vh-3.5rem)]">
+          <div className=" flex min-h-[calc(100vh-3.5rem)] pt-[55px] ">
                
         <VideoSidebar setReviewModal={setReviewModal}/>
 

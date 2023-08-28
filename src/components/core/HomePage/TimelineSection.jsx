@@ -3,7 +3,7 @@ import logo1 from '../../../assets/TimeLineLogo/Logo1.svg'
 import logo2 from '../../../assets/TimeLineLogo/Logo2.svg'
 import logo3 from '../../../assets/TimeLineLogo/Logo3.svg'
 import logo4 from '../../../assets/TimeLineLogo/Logo4.svg'
-import timel from '../../../assets/Images/TimelineImage.png'
+import timel from '../../../assets/Images/TimelineImage.jpg'
 
 
 const timeline = [
@@ -61,7 +61,8 @@ export default function TimelineSection() {
       
         <img src={timel} 
           alt="timelineImage"
-          className=" shadow-white shadow-[20px_20px_0px_0px] w-full   h-fit"
+        
+          className=" shadow-white shadow-[20px_20px_0px_0px] w-full   h-fit "
         />
 
         <div className=" absolute bg-caribbeangreen-600 flex flex-col lg:flex-row items-center   text-pure-greys-5 uppercase

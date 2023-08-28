@@ -14,7 +14,7 @@ export default function Template({title,description1, description2, image, formT
   return (
 
     //main div 
-    <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+    <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center pt-14">
 
      {/* check loading and set  spinner  */}
     {loading ? (
@@ -26,7 +26,7 @@ export default function Template({title,description1, description2, image, formT
        {/* left side that is form and description  */}
         <div className="mx-auto w-11/12 max-w-[450px] md:mx-0">
 
-          <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-5">
+          <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-100">
             {title}
           </h1>
 
@@ -64,7 +64,7 @@ export default function Template({title,description1, description2, image, formT
             width={558}
             height={504}
             loading="lazy"
-            className="absolute -top-4 right-4 z-10"
+            className="absolute -top-4 right-4 z-10 w-full"
           />
         </div>
       </div>

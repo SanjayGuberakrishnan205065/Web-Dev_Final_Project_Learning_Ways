@@ -46,10 +46,11 @@ export default function Navbar() {
 
   return (
     <div
-      className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700
+      className={`flex fixed  w-full z-[1000] h-14 items-center justify-center border-b-[1px] border-b-richblack-700
      ${
-       location.pathname === "/" ? "bg-[#12307066]" : " bg-richblack-900"
-     } transition-all duration-200`}
+       location.pathname !== "/" ? "bg-richblack-900" : "  bg-[#172c70]"
+     } transition-all duration-200
+     `}
     >
       <div className="flex w-11/12 max-w-maxContent  items-center justify-between flex-row-reverse md:flex-row">
 

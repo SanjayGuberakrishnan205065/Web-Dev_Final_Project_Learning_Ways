@@ -3,8 +3,8 @@ import HightlightText from "../components/core/HomePage/HightlightText";
 
 import aboutus1 from "../assets/Images/aboutus1.webp";
 import aboutus2 from "../assets/Images/aboutus2.webp";
-import aboutus3 from "../assets/Images/aboutus3.webp";
-import foundstory from "../assets/Images/FoundingStory.png";
+import aboutus3 from "../assets/Images/aboutus3.jpg";
+import foundstory from "../assets/Images/FoundingStory.jpg";
 import Quote from "../components/core/AboutPage/Quote";
 import State from "../components/core/AboutPage/State";
 import LearningGrid from "../components/core/AboutPage/LearningGrid";

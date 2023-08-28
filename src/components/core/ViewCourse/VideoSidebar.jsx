@@ -117,11 +117,10 @@ export default function VideoSidebar({ setReviewModal }) {
             >
               {/* section  */}
 
-              <div className="flex flex-row justify-between bg-richblack-600 px-5 py-4">
+              <div className="flex flex-row justify-between  bg-richblack-700  px-5 py-4">
                 <div className="w-[70%] font-semibold">
                   {section?.sectionName}
                 </div>
-
                 <div className="flex items-center gap-3">
                   <span
                     className={`${

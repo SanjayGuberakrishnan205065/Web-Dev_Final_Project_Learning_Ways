@@ -13,10 +13,9 @@ import ExploreMore from "../components/core/HomePage/ExploreMore";
 import ReviewSlider from "../components/comman/ReviewSlider";
 export default function Home() {
   return (
-    <div>
-       
-
-      <div className=" relative mx-auto flex flex-col items-center justify-center text-richblack-50">
+    <div className=" bg-richblack-900 pt-2 ">
+      <div className=" relative pt-5 mx-auto flex flex-col items-center justify-center text-richblack-50">
+     
         {/* Section 1 */}
 
         <div className="flex w-11/12 flex-col items-center justify-center">
@@ -146,7 +145,7 @@ export default function Home() {
       {/* Section 2 */}
 
       <div className=" bg-pure-greys-5  text-richblack-700 pb-10 ">
-
+  
          {/* two buttons */}
         <div className="homepage_bg  h-[310px]">
 

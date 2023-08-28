@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Home from "./pages/Home"
 import Navbar from "./components/comman/Navbar";
 import OpenRoute from "./components/core/Auth/OpenRoute";
@@ -37,12 +37,17 @@ function App() {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation()
  
   
   const { user } = useSelector((state) => state.profile)
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex-col font-inter">
+
+  
     <Navbar/>
+   
+
     <Routes>
 
         <Route path="/" element={<Home />} />

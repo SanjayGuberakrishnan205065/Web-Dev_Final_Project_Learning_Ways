@@ -179,7 +179,7 @@ export default function VideoDetails() {
     setLoading(false);
   };
   return (
-    <div className="flex flex-col gap-5 text-white mt-4">
+    <div className="flex flex-col gap-5 text-white md:mt-4">
       {!videoData ? (
         <img
           src={previewSource}
@@ -253,8 +253,14 @@ export default function VideoDetails() {
         </Player>
       )}
 
-      <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>
-      <p className="pt-2 pb-6">{videoData?.description}</p>
+      <div className=" px-5 md:px-0">
+      
+      <h1 className="mt-4 text-2xl md:text-3xl font-semibold text-richblue-100">{videoData?.title}</h1>
+      <p className="pt-2 pb-6 text-richblack-200">{videoData?.description}</p>
+
+      </div>
+
+
     </div>
   );
 }

@@ -40,6 +40,7 @@ export default function ProfileDropdown() {
               Dashboard
             </div>
           </Link>
+          
           <div
             onClick={() => {
               dispatch(logout(navigate))

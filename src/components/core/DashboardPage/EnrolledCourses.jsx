@@ -49,6 +49,8 @@ const EnrolledCourses = () => {
             <p className="w-1/4 px-2 py-3">Duration</p>
             <p className="flex-1 px-2 py-3">Progress</p>
           </div>
+
+
           {/* Cards shure hote h ab */}
           {enrolledCourses.map((course, index, arr) => (
             <div
@@ -57,8 +59,9 @@ const EnrolledCourses = () => {
               }`}
               key={index}
             >
+
               <div
-                className="flex w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
+                className="flex flex-col md:flex-row w-[45%] cursor-pointer  items-start gap-4 px-5 py-3"
                 onClick={() => {
                   navigate(
                     `/view-course/${course?._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`
@@ -66,8 +69,9 @@ const EnrolledCourses = () => {
                 }}
               >
                 <img src={course.thumbNail}  alt="CourseImg"
-                className="h-14 w-14 rounded-lg object-fit"
+                className="h-16 w-24 rounded-lg object-fit"
                  />
+
                  <div className="flex max-w-xs flex-col gap-2">
                  <p className="font-semibold">{course.courseName}</p>
                  <p className="text-xs text-richblack-300">

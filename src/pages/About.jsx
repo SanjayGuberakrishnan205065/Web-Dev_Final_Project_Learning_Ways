@@ -21,13 +21,12 @@ export default function About() {
       <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-center  text-richblack-100">
         
           <header className="mx-auto py-16 text-4xl font-semibold lg:w-[70%]">
-            Driving Innovation in Online Education for a
-            <HightlightText text={"Brighter Future"}></HightlightText>
+            
+                Pioneering Innovation in Online Education for a 
+            <HightlightText text={"Promising Tomorrow"}></HightlightText>
             <p className="mx-auto mt-3 text-center text-base font-medium text-richblack-300 lg:w-[95%]">
               <HightlightText text={"Learning way"}></HightlightText> is at the forefront of driving innovation in online
-              education. We're passionate about creating a brighter future by
-              offering cutting-edge courses, leveraging emerging technologies,
-              and nurturing a vibrant learning community.
+              Education is our passion. We're dedicated to shaping a more radiant future through advanced courses, harnessing emerging technologies, and fostering a dynamic learning community.
             </p>
           </header>
           <div className="sm:h-[70px] lg:h-[150px]"></div>
@@ -57,23 +56,14 @@ export default function About() {
             {/* left */}
             <div className="my-24 flex lg:w-[50%] flex-col gap-10">
             <h1 className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">
-             Our Founding Story</h1>
+             
+                  The Inception of Our Story</h1>
              <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
                 {" "}
-                Our e-learning platform was born out of a shared vision and
-                passion for transforming education. It all began with a group of
-                educators, technologists, and lifelong learners who recognized
-                the need for accessible, flexible, and high-quality learning
-                opportunities in a rapidly evolving digital world.
+                Our e-learning platform emerged from a united vision and dedication to revolutionize education. It commenced with a collective of educators, technologists, and perpetual learners who acknowledged the demand for accessible, adaptable, and top-tier learning prospects within an ever-changing digital landscape.
               </p>
               <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
-                As experienced educators ourselves, we witnessed firsthand the
-                limitations and challenges of traditional education systems. We
-                believed that education should not be confined to the walls of a
-                classroom or restricted by geographical boundaries. We
-                envisioned a platform that could bridge these gaps and empower
-                individuals from all walks of life to unlock their full
-                potential.
+              As seasoned educators, we personally observed the restrictions and hurdles of conventional educational systems. We firmly believed that learning shouldn't be confined to classroom walls or hindered by geographical limits. Our vision was to establish a platform capable of bridging these gaps, enabling people from diverse backgrounds to unleash their utmost capabilities.
               </p>
             </div>
 
@@ -95,12 +85,7 @@ export default function About() {
                  <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
 
                 {" "}
-                With this vision in mind, we set out on a journey to create an
-                e-learning platform that would revolutionize the way people
-                learn. Our team of dedicated experts worked tirelessly to
-                develop a robust and intuitive platform that combines
-                cutting-edge technology with engaging content, fostering a
-                dynamic and interactive learning experience.
+                Guided by this vision, we embarked on a mission to craft an e-learning platform that would transform the landscape of learning. Our devoted team of experts worked relentlessly to forge a sturdy and user-friendly platform, seamlessly melding cutting-edge technology with captivating content, thereby nurturing a vibrant and participatory learning journey.
               </p>
             </div>
             {/* mision */}
@@ -109,12 +94,7 @@ export default function About() {
               Our mission</h1>
               <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
                 {" "}
-                Our mission goes beyond just delivering courses online. We
-                wanted to create a vibrant community of learners, where
-                individuals can connect, collaborate, and learn from one
-                another. We believe that knowledge thrives in an environment of
-                sharing and dialogue, and we foster this spirit of collaboration
-                through forums, live sessions, and networking opportunities.
+                Our purpose transcends mere online course delivery. Our aim was to establish a thriving community of learners, where individuals could come together to connect, collaborate, and glean insights from each other. We hold the conviction that knowledge flourishes in an atmosphere of exchange and discourse. To nurture this spirit of teamwork, we facilitate interactions through forums, live sessions, and networking occasions.
               </p>
             </div>
           </div>

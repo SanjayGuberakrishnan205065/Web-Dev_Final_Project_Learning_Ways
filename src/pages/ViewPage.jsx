@@ -47,10 +47,12 @@ export default function ViewPage() {
 
   return (
   <>
-            <div className="relative flex min-h-[calc(100vh-3.5rem)]">
-
+            <div className=" flex min-h-[calc(100vh-3.5rem)]">
+               
         <VideoSidebar setReviewModal={setReviewModal}/>
-        <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
+
+        <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto hidden md:block ">
+
             <div className=' mx-6'>
 
             <Outlet/>

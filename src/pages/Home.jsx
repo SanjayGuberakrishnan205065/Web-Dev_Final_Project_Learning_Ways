@@ -31,7 +31,7 @@ export default function Home() {
                 className="flex flex-row gap-2 items-center justify-center rounded-full px-10 py-[5px]
        transition-all duration-200 group-hover:bg-richblack-900 "
               >
-                <p>Become an Instructor </p>
+                <p> Become a Teacher </p>
                 <FaArrowRight />
               </div>
             </div>
@@ -39,16 +39,14 @@ export default function Home() {
 
           {/* heading  */}
           <div className=" text-center text-4xl font-semibold mt-8">
-            Empower Your Future with
-            <HightlightText text={"Coding Skill"} />
+            
+            Enhance Your Future with
+            <HightlightText text={"Coding Proficiency"} />
           </div>
 
           {/* subheading  */}
           <div className=" mt-8 mx-auto  lg:w-[80%]   text-center text-base font-bold text-richblack-300">
-            With our online coding courses, you can learn at your own pace, from
-            anywhere in the world, and get access to a wealth of resources,
-            including hands-on projects, quizzes, and personalized feedback from
-            instructors.
+          Through our online coding courses, you have the flexibility to learn at your preferred speed, regardless of your location worldwide. Additionally, you'll have the opportunity to utilize a wide array of materials such as practical projects, quizzes, and individualized guidance provided by instructors.
           </div>
 
           {/* Learn more and book a demo button  */}
@@ -81,13 +79,13 @@ export default function Home() {
               position={"lg:flex-row flex-col"}
               heading={
                 <div className=" text-4xl font-semibold">
-                  Unlock your
+                 Harness your
                   <HightlightText text={"coding potential "} />
                   with our online courses
                 </div>
               }
               subheading={
-                "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
+                "Our courses are meticulously crafted and instructed by industry professionals who possess extensive coding experience and a fervor for imparting their wisdom to you."
               }
               ctabtn1={{
                 btntxt: "Try it yourself",
@@ -111,15 +109,16 @@ export default function Home() {
               position={"lg:flex-row-reverse flex-col"}
               heading={
                 <div className=" text-4xl font-semibold">
-                  Start
-                  <HightlightText text={"coding in"} />
+                
+                 Initiate  moments
+                  <HightlightText text={"coding within"} />
                   <br></br>
-                  <HightlightText text={"seconds"} />
+                  <HightlightText text={"moments"} />
                   {/* with our online courses */}
                 </div>
               }
               subheading={
-                "Go ahead, give it a try. Our hands-on llearning environment means you'll be writing real code from your very first lesson."
+                "Feel free to take the plunge and give it a shot. Our interactive learning environment ensures that you'll start writing actual code right from your initial lesson."
               }
               ctabtn1={{
                 btntxt: "Continue Lesson",
@@ -131,7 +130,7 @@ export default function Home() {
                 linkTo: "/login",
                 active: false,
               }}
-              codebolck={`#include <iostream>\nusing namespace std;\nint main() { \n int num1, num2, sum; \n cin>>num1>>num2; \n sum = num1 + num2; \n cout<<"Sum of two numbers:"<<sum; \n return 0; \n}\nOutput: 12 35\nSum of two numbers:47`}
+              codebolck={`import axios from "axios"\nconst Instance=axios.create({});\nexport const apiConnector=\n( bodyData, headers, params) => { \n return axiosInstance({ \n   data:bodyData? bodyData:null, \n   headers:headers? headers:null, \n   params:params? params:null, \n   url,  \n   method \n}`}
               //   backgroundGradient={}
               codeColor={"text-richblack-500"}
               backgroundGradient={""}
@@ -173,14 +172,12 @@ export default function Home() {
 
           <div className=" flex  lg:flex-row flex-col justify-between lg:gap-0 gap-5 mb-10 mt-[95px]">
             <div className=" text-4xl  font-semibold lg:w-[45%]">
-              Get the skills you need for a
-              <HightlightText text={"Job that in demand."} />
+            Acquire the skills necessary for a
+              <HightlightText text={"highly sought-after job"} />
             </div>
             <div className=" flex  flex-col gap-10 lg:w-[45%] items-start">
               <div className=" text-[16px]">
-                The modern StudyNotion is the dictates its own terms. Today, to
-                be a competitive specialist requires more than professional
-                skills.
+              In the modern era of learning, the app "Learning Ways" defines its own parameters. Today, being a competitive specialist entails more than just possessing professional skills.
               </div>
               <CTAButton active={true} linkTo={"/signup"}>
                 Learn More

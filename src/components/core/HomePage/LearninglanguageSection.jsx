@@ -12,9 +12,9 @@ export default function LearninglanguageSection() {
 
    
        <div className=' text-4xl font-semibold text-center'>
-       Your swiss knife for <HightlightText text={ "learning any language"} />
+       Your versatile tool for <HightlightText text={ "mastering any language"} />
        </div>
-       <p className=' text-center text-richblack-700 font-medium lg:w-[75%] mx-auto leading-6 text-base mt-3'>Using spin making learning multiple languages easy. with 20+ languages realistic voice-over, progress tracking, custom schedule and more.</p>
+       <p className=' text-center text-richblack-700 font-medium lg:w-[75%] mx-auto leading-6 text-base mt-3'>Leveraging spin technology makes learning multiple languages a breeze. With over 20 languages, realistic voice-overs, progress tracking, customizable schedules, and more, the process becomes effortless.</p>
         
         <div className='flex flex-col lg:flex-row lg:items-center lg:justify-center '>
         <img 

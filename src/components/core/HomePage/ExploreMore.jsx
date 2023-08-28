@@ -38,9 +38,11 @@ export default function ExploreMore() {
   return (
     <div>
     <div className=' text-4xl font-semibold text-center my-10'>
-        Unlock the  
+        
+      Unleash the  
         <HightlightText text={"Power of Code"}></HightlightText>
     </div>
+
     <p className=' text-center ring-richblack-300 text-[16px] mt-3'>
         Learn to build anything you can imagine
     </p>

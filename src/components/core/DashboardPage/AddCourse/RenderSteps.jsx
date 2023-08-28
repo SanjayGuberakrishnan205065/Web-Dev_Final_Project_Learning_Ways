@@ -63,11 +63,11 @@ export default function RenderSteps() {
 
       {/* headinngs */}
 
-      <div className="relative mb-16 flex w-full select-none justify-between">
+      <div className="relative mb-16 flex md:w-full   select-none justify-between">
         {steps.map((item) => {
           return (
             <div key={item.id}
-             className="flex min-w-[130px] flex-col items-center gap-y-2">
+             className="flex md:min-w-[130px] flex-col items-center gap-y-2">
               <p 
                className={`text-sm ${
                   step >= item.id ? "text-richblack-100" : "text-richblack-500"

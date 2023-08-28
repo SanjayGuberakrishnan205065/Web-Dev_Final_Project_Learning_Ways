@@ -1,9 +1,5 @@
 import axios from "axios"
-
 export const axiosInstance = axios.create({});
-
-
-
 // this is the most importent patr that is connection of back end and frontend 
 export const apiConnector = (method, url, bodyData, headers, params) => {
     return axiosInstance({
@@ -14,3 +10,5 @@ export const apiConnector = (method, url, bodyData, headers, params) => {
         params: params ? params : null,
     });
 }
+
+

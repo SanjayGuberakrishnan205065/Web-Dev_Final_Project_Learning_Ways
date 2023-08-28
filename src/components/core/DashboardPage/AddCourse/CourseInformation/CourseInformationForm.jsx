@@ -166,7 +166,7 @@ export default function CourseInformationForm() {
     <form
       onSubmit={handleSubmit(onSubmit)}
       // className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6 "
-      className="space-y-8  border-[0.12rem] border-richblack-800 rounded-lg lg:p-12 p-5"
+      className="space-y-8  border-[0.12rem] border-richblack-800 rounded-lg lg:p-12 p-5 m-2"
     >
       {/* course title  */}
       <div className="flex flex-col space-y-2">
@@ -317,7 +317,7 @@ export default function CourseInformationForm() {
       />
 
       {/* next button  */}
-      <div className="flex justify-end gap-x-2">
+      <div className="flex flex-col md:flex-row justify-end gap-3">
         {editCourse && (
           <button onClick={() => dispatch(setStep(2))}
           disabled={loading}
@@ -327,7 +327,7 @@ export default function CourseInformationForm() {
           </button>
         )}
 
-        <IconBtn text={!editCourse ? "Next" : "Save Chnages"} type={"submit"} >
+        <IconBtn text={!editCourse ? "Next" : "Save Chnages"} type={"submit"} customClasses={" text-center"} >
         <MdNavigateNext />
         </IconBtn>
       </div>

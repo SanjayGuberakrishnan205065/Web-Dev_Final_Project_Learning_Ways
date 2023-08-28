@@ -25,8 +25,7 @@ export default function InstructorSection() {
     </div>
 
     <p className=' text-richblack-300 font-medium text[16px] lg:w-[90%]'>
-    Instructors from around the world teach millions of students on StudyNotion. We provide the tools and skills to teach what you love.
-    </p>
+    Instructors spanning the globe educate millions of students on "Learning Ways." We furnish you with the means and expertise to teach subjects you're truly passionate about. </p>
 
     <div  className=' w-fit '>
         <CTAButton  className='' active={true} linkTo={"/signup"}>

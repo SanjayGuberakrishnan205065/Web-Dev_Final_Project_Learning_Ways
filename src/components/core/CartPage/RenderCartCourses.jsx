@@ -25,7 +25,7 @@ export default function RenderCartCourses() {
             <img
               src={course?.thumbNail}
               alt={course?.courseName}
-              className="h-[148px] w-[220px] rounded-lg object-cover"
+              className="h-[148px] w-[220px] rounded-lg object-fit"
             />
             <div className="flex flex-col space-y-1">
               <p className="text-lg font-medium text-richblack-5">

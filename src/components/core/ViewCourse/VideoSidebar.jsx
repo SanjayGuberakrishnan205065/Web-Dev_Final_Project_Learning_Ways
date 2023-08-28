@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import IconBtn from "../../comman/IconBtn";
 import { BsChevronDown } from "react-icons/bs";
 import { IoIosArrowBack } from "react-icons/io";
+import VideoDetails from "./VideoDetails";
 
 export default function VideoSidebar({ setReviewModal }) {
   const { sectionId, subSectionId } = useParams();
@@ -57,9 +58,10 @@ export default function VideoSidebar({ setReviewModal }) {
 //  console.log("total",totalLectures)
   return (
     <>
-      <div className="flex h-[calc(100vh-3.5rem)] w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800">
+      <div className="flex  w-full  md:h-[calc(100vh-3.5rem)] md:w-[320px] md:max-w-[350px] flex-col md:border-r-[1px] md:border-r-richblack-700 bg-richblack-900 md:bg-richblack-800">
         {/* button Heading  */}
-        <div className="mx-5 flex flex-col items-start justify-between gap-2 gap-y-4 border-b border-richblack-600 py-5 text-lg font-bold text-richblack-200">
+        <div className=" bg-richblack-800">
+        <div className="mx-5 flex flex-col items-start justify-between gap-2 gap-y-4 md:border-b border-richblack-600 py-4 text-lg font-bold text-richblack-200">
           {/* buttons */}
           <div className="flex w-full items-center justify-between ">
             <div
@@ -78,17 +80,35 @@ export default function VideoSidebar({ setReviewModal }) {
               />
             </div>
           </div>
-          {/* heading  */}
-          <div className="flex flex-col">
+          <div className=" flex-col text-lg md:block hidden">
             <p>{courseEntireData.courseName}</p>
             <p className="text-sm font-semibold text-richblack-400">
               {completedLectures?.length}/{totalLectures}
             </p>
           </div>
+          
+         
         </div>
+          
+        </div>
+       
+
+
+        <div className=" bg-richblack-900 md:bg-richblack-800">
+        <div className="md:hidden bg-richblack-900 ">
+            <VideoDetails/>
+          </div>
 
         {/* section and subsection  */}
-        <div className="h-[calc(100vh - 5rem)] overflow-y-auto">
+        <div className="h-[calc(100vh - 5rem)] overflow-y-auto   border-[1px] border-richblack-600 m-5  md:m-0 md:border-none ">
+         {/* heading  */}
+         <div className=" p-5  flex flex-col text-lg font-bold text-richblack-200 sm:block md:hidden  b">
+            <p>{courseEntireData.courseName}</p>
+            <p className="text-sm font-semibold text-richblack-400">
+              {completedLectures?.length}/{totalLectures}
+            </p>
+          </div>
+
           {courseSectionData.map((section, index) => (
             <div
               className="mt-2 cursor-pointer text-sm text-richblack-100"
@@ -147,6 +167,11 @@ export default function VideoSidebar({ setReviewModal }) {
             </div>
           ))}
         </div>
+
+
+        </div>
+
+        
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 //Reset Password Token
 const User = require("../models/User");
 const bcrypt = require("bcrypt")
+const crypto = require("crypto")
 const { mailSender } = require("../utils/mailSender");
 const {resetPassword} = require("../MailFormat/resetPassword")
 require("dotenv").config();

@@ -21,7 +21,7 @@ export default function Home() {
         <div className="flex w-11/12 flex-col items-center justify-center">
 
           {/* Top buttom  */}
-          <Link to={"/signup"}>
+          <Link to={"/signup"}> 
             <div
               className=" group mx-auto mt-16 p-1 rounded-full bg-richblack-800 font-bold  text-richblack-50
        transition-all duration-200  hover:scale-95 w-fit"

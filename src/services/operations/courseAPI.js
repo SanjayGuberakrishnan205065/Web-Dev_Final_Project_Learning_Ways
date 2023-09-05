@@ -183,7 +183,7 @@ export const addCourseDetails = async (data, token) => {
     result = response?.data?.data;
   } catch (error) {
     console.log("CREATE_COURSE API ERROR............", error);
-    toast.error(error.response.data.message);
+    toast.error("Can not create course");
   }
   toast.dismiss(toastId);
   return result;

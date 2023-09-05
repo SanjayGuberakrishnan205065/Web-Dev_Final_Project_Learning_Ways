@@ -12,7 +12,7 @@ export default function DeleteAccount() {
   const {token } = useSelector((state)=>state.auth);
   const navigate= useNavigate()
   const dispatch = useDispatch()
-  console.log("deletrd token",token)
+  // console.log("deletrd token",token)
 
   // conformation model 
   const [confirmationModal, setConfirmationModal] = useState(null);

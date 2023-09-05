@@ -105,7 +105,7 @@ export default function MobileNav({ setOpen }) {
           )
         }
 
-        {
+        {token &&
           <div
                 onClick={() => {
                   dispatch(logout(navigate));
